@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Paleta de Colores Principal -->
-    <color name="md_theme_primary">#00629E</color>
+    <!-- Paleta vibrante y moderna, sin duplicados y con contraste -->
+    <color name="md_theme_primary">#1976D2</color> <!-- Azul vibrante -->
     <color name="md_theme_onPrimary">#FFFFFF</color>
-    <color name="md_theme_primaryContainer">#CFE5FF</color>
-    <color name="md_theme_onPrimaryContainer">#001D34</color>
-    <color name="md_theme_secondary">#51606F</color>
+    <color name="md_theme_primaryContainer">#63A4FF</color>
+    <color name="md_theme_onPrimaryContainer">#002171</color>
+    <color name="md_theme_secondary">#43A047</color> <!-- Verde -->
     <color name="md_theme_onSecondary">#FFFFFF</color>
-    <color name="md_theme_secondaryContainer">#D4E4F6</color>
-    <color name="md_theme_onSecondaryContainer">#0D1D2A</color>
-    <color name="md_theme_tertiary">#67587A</color>
-    <color name="md_theme_onTertiary">#FFFFFF</color>
-    <color name="md_theme_tertiaryContainer">#EBDCFF</color>
-    <color name="md_theme_onTertiaryContainer">#221534</color>
-    <color name="md_theme_error">#BA1A1A</color>
+    <color name="md_theme_secondaryContainer">#A5D6A7</color>
+    <color name="md_theme_onSecondaryContainer">#0A0A0A</color> <!-- Negro casi puro sobre verde claro -->
+    <color name="md_theme_tertiary">#FFB300</color> <!-- Amarillo -->
+    <color name="md_theme_onTertiary">#111111</color> <!-- Negro puro sobre amarillo -->
+    <color name="md_theme_tertiaryContainer">#FFE082</color>
+    <color name="md_theme_onTertiaryContainer">#111111</color>
+    <color name="md_theme_error">#D32F2F</color> <!-- Rojo -->
     <color name="md_theme_onError">#FFFFFF</color>
-    <color name="md_theme_background">#F8F9FF</color>
-    <color name="md_theme_onBackground">#191C20</color>
-    <color name="md_theme_surface">#F8F9FF</color>
-    <color name="md_theme_onSurface">#191C20</color>
-    
+    <color name="md_theme_background">#F5F5F5</color>
+    <color name="md_theme_onBackground">#111111</color> <!-- Negro puro sobre fondo claro -->
+    <color name="md_theme_surface">#FFFFFF</color>
+    <color name="md_theme_onSurface">#111111</color>
     <!-- Colores existentes -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>

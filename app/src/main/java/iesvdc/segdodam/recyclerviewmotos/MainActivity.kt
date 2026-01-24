@@ -54,6 +54,20 @@ class MainActivity : AppCompatActivity() {
 
         // 4. Lógica para el botón de Logout en el Drawer
         setupLogoutAction(navView)
+
+        // 5. Lógica para el botón de Logout en la barra inferior
+        bottomNavView.setOnItemSelectedListener { item ->
+            if (item.itemId == R.id.logout) {
+                logout()
+                true
+            } else {
+                // Navegación normal
+                val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as androidx.navigation.fragment.NavHostFragment
+                val navController = navHostFragment.navController
+                navController.navigate(item.itemId)
+                true
+            }
+        }
     }
 
     private fun setupNavHeader(navView: NavigationView) {
