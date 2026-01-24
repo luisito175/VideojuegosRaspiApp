@@ -13,110 +13,129 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:background="#FEAFAFAF"
-        >
+        android:background="?attr/colorSurface">
 
-
+        <TextView
+            android:id="@+id/tvTitulo"
+            style="@style/Widget.App.TextView.Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Añadir / Editar Moto"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageView
             android:id="@+id/imgPreview"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginStart="12dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="16dp"
             android:contentDescription="Imagen de la moto"
             android:scaleType="centerCrop"
             android:src="@android:drawable/ic_menu_gallery"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="-3dp" />
+            app:layout_constraintTop_toBottomOf="@id/tvTitulo" />
 
         <Button
             android:id="@+id/btnSelectImage"
-            android:layout_width="wrap_content"
+            style="@style/Widget.App.Button.Secondary"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/black"
+            android:layout_marginStart="16dp"
             android:text="Seleccionar imagen"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/imgPreview"
-            tools:layout_editor_absoluteY="49dp" />
-
-        <TextView
-            android:id="@+id/tvTitulo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="176dp"
-            android:text="Añadir / Editar Moto"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/imgPreview"/>
 
-        <EditText
-            android:id="@+id/edtMarca"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilMarca"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:hint="Marca"
-            app:layout_constraintTop_toBottomOf="@id/tvTitulo"
+            app:layout_constraintTop_toBottomOf="@id/imgPreview"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="12dp"/>
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <EditText
-            android:id="@+id/edtModelo"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtMarca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilModelo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:hint="Modelo"
-            app:layout_constraintTop_toBottomOf="@id/edtMarca"
+            app:layout_constraintTop_toBottomOf="@id/tilMarca"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"/>
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <EditText
-            android:id="@+id/edtCaracteristicas"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtModelo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilCaracteristicas"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:hint="Características"
-            app:layout_constraintTop_toBottomOf="@id/edtModelo"
+            app:layout_constraintTop_toBottomOf="@id/tilModelo"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"/>
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <EditText
-            android:id="@+id/edtImagen"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtCaracteristicas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilImagen"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:hint="URL Imagen"
-            app:layout_constraintTop_toBottomOf="@id/edtCaracteristicas"
+            app:layout_constraintTop_toBottomOf="@id/tilCaracteristicas"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"/>
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtImagen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnAceptar"
+            style="@style/Widget.App.Button.Primary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="Aceptar"
-            android:backgroundTint="#000000"
-            android:textColor="@android:color/white"
-            app:layout_constraintTop_toBottomOf="@id/edtImagen"
+            app:layout_constraintTop_toBottomOf="@id/tilImagen"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <Button
             android:id="@+id/btnCancelar"
+            style="@style/Widget.App.Button.Secondary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="Cancelar"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@id/btnAceptar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

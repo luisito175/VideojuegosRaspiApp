@@ -1,8 +1,7 @@
-package iesvdc.segdodam.recyclerviewmotos.repository
+package iesvdc.segdodam.recyclerviewmotos.object_models
 
 import iesvdc.segdodam.recyclerviewmotos.Interfaces.InterfaceDao
 import iesvdc.segdodam.recyclerviewmotos.models.Moto
-import iesvdc.segdodam.recyclerviewmotos.repository.Repository.motos
 
 object Repository : InterfaceDao{
 
@@ -72,6 +71,4 @@ object Repository : InterfaceDao{
     override fun getAllMotos(): List<Moto> {
         return motos
     }
-
-
 }

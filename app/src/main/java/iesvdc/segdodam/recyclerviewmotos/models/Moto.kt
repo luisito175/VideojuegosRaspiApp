@@ -1,13 +1,20 @@
 package iesvdc.segdodam.recyclerviewmotos.models
 
-class Moto (
-    var marca: String,
-    var modelo: String,
-    var caracteristicas: String,
-    var imagen : String
-) {
-    override fun toString(): String {
-        return "Moto(marca='$marca', modelo='$modelo', caracteristicas='$caracteristicas', imagen='$imagen')"
-    }
-
-}
+/**
+ * `Moto.kt`
+ * Modelo de datos que representa una motocicleta.
+ *
+ * Usamos una `data class` porque nos proporciona automáticamente
+ * métodos útiles como `equals()`, `hashCode()`, `toString()`, `copy()`, etc.
+ *
+ * @property marca La marca de la motocicleta (ej. Yamaha, Honda).
+ * @property modelo El modelo específico de la moto.
+ * @property caracteristicas Una breve descripción de sus características técnicas.
+ * @property imagen La URL o URI de la imagen de la moto.
+ */
+data class Moto (
+    val marca: String,
+    val modelo: String,
+    val caracteristicas: String,
+    val imagen : String
+)

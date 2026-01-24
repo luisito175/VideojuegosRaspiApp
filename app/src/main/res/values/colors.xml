@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Paleta de Colores Principal -->
+    <color name="md_theme_primary">#00629E</color>
+    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="md_theme_primaryContainer">#CFE5FF</color>
+    <color name="md_theme_onPrimaryContainer">#001D34</color>
+    <color name="md_theme_secondary">#51606F</color>
+    <color name="md_theme_onSecondary">#FFFFFF</color>
+    <color name="md_theme_secondaryContainer">#D4E4F6</color>
+    <color name="md_theme_onSecondaryContainer">#0D1D2A</color>
+    <color name="md_theme_tertiary">#67587A</color>
+    <color name="md_theme_onTertiary">#FFFFFF</color>
+    <color name="md_theme_tertiaryContainer">#EBDCFF</color>
+    <color name="md_theme_onTertiaryContainer">#221534</color>
+    <color name="md_theme_error">#BA1A1A</color>
+    <color name="md_theme_onError">#FFFFFF</color>
+    <color name="md_theme_background">#F8F9FF</color>
+    <color name="md_theme_onBackground">#191C20</color>
+    <color name="md_theme_surface">#F8F9FF</color>
+    <color name="md_theme_onSurface">#191C20</color>
+    
+    <!-- Colores existentes -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

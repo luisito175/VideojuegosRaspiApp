@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Estilo base para los botones -->
+    <style name="Widget.App.Button" parent="Widget.Material3.Button">
+        <item name="android:layout_height">56dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="cornerRadius">28dp</item>
+    </style>
+
+    <!-- Estilo para el botón principal (con relleno) -->
+    <style name="Widget.App.Button.Primary" parent="Widget.App.Button">
+        <item name="android:backgroundTint">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+
+    <!-- Estilo para el botón secundario (con borde) -->
+    <style name="Widget.App.Button.Secondary" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:layout_height">56dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="cornerRadius">28dp</item>
+        <item name="strokeColor">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <!-- Estilo para los títulos de las secciones -->
+    <style name="Widget.App.TextView.Title" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+</resources>

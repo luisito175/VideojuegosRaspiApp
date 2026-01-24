@@ -1,6 +1,8 @@
+package iesvdc.segdodam.recyclerviewmotos.Dao
+
 import iesvdc.segdodam.recyclerviewmotos.Interfaces.InterfaceDao
 import iesvdc.segdodam.recyclerviewmotos.models.Moto
-import iesvdc.segdodam.recyclerviewmotos.repository.Repository
+import iesvdc.segdodam.recyclerviewmotos.object_models.Repository
 
 class DaoMoto private constructor(): InterfaceDao {
     companion object {
