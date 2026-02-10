@@ -19,9 +19,139 @@ Este es un proyecto de Android que demuestra el uso de `RecyclerView` para mostr
 - **Versión 1.2**: [Ver demostración en YouTube](https://youtu.be/ULpFjaF5WlY)
 - **Versión 1.1**: [Ver demostración en YouTube](https://youtu.be/6ClddBkvGy8)
 
-## Componentes Clave
+## Actualización v1.4: Arquitectura MVVM + Firebase
 
-- **`MainActivity.kt`**: Actividad principal que contiene el `RecyclerView` y coordina las interacciones principales.
+La versión 1.4 introduce una arquitectura moderna basada en **MVVM (Model-View-ViewModel)** con **Clean Architecture** y la integración de **Firebase** para autenticación y persistencia de datos en la nube.
+
+### Arquitectura MVVM
+
+El patrón **MVVM** separa la interfaz de usuario de la lógica de negocio mediante:
+
+- **Model**: Representa los datos de la aplicación (entidades del dominio y datos del repositorio).
+- **View**: Actividades y Fragmentos que muestran la interfaz de usuario.
+- **ViewModel**: Clase que contiene la lógica de presentación y expone datos mediante `LiveData` para que la View se suscriba a cambios.
+
+#### Ventajas de MVVM:
+- Separación clara de responsabilidades
+- Código más testeable y mantenible
+- Mejor reactividad con `LiveData`
+- Estado de UI persistente durante cambios de configuración
+
+### Firebase Integration
+
+#### Autenticación con Firebase
+
+La aplicación utiliza **Firebase Authentication** para gestionar el registro e inicio de sesión de usuarios:
+
+- **Email/Password Authentication**: Registro de nuevos usuarios y autenticación con credenciales.
+- **LoginActivity**: Pantalla de inicio de sesión con validación en Firebase.
+- **RegisterActivity**: Formulario completo para crear nuevas cuentas con confirmación de contraseña.
+
+**Validaciones implementadas:**
+- ✓ Formato de email válido (regex)
+- ✓ Contraseña mínimo 6 caracteres
+- ✓ Confirmación de contraseña
+- ✓ Mensajes de error descriptivos
+
+#### Base de Datos: Firestore
+
+**Cloud Firestore** almacena los datos de usuarios en la nube:
+
+**Colección: `users`**
+```
+users/
+  {userId}/
+    - userId: String
+    - email: String
+    - fullName: String
+    - createdAt: Timestamp
+```
+
+**Ventajas:**
+- Sincronización en tiempo real
+- Respaldo automático en la nube
+- Seguridad con Rules de Firestore
+- Escalabilidad automática
+
+### Componentes Nuevos en v1.4
+
+#### AuthViewModel
+ViewModel centralizado que gestiona toda la lógica de autenticación:
+
+```kotlin
+// Métodos principales
+fun login(email: String, password: String)
+fun register(email: String, password: String, fullName: String)
+fun logout()
+fun isUserLoggedIn(): Boolean
+fun getCurrentUserEmail(): String?
+```
+
+**LiveData expuesto:**
+- `authState`: Estado de autenticación (Success/LoggedOut/Loading)
+- `loading`: Indica si hay operación en progreso
+- `errorMessage`: Mensajes de error
+
+#### FirebaseModule
+Módulo Hilt que proporciona instancias singleton de:
+- `FirebaseAuth`: Para operaciones de autenticación
+- `FirebaseFirestore`: Para operaciones de base de datos
+
+### Dependencia Inyección con Hilt
+
+La aplicación usa **Hilt** para inyección automática de dependencias:
+
+```kotlin
+@AndroidEntryPoint
+class LoginActivity : AppCompatActivity() {
+    private val authViewModel: AuthViewModel by viewModels()
+    // Hilt proporciona automáticamente el ViewModel
+}
+```
+
+**Beneficios:**
+- Código más limpio sin ServiceLocator manual
+- Mejor testabilidad
+- Gestión automática del ciclo de vida
+
+### Flujo de Autenticación
+
+1. **Registro**: 
+   - Usuario completa formulario con nombre, email, contraseña
+   - `AuthViewModel.register()` crea cuenta en Firebase
+   - Datos de usuario se guardan en Firestore
+   - Logout automático y redirección a LoginActivity
+
+2. **Login**:
+   - Usuario ingresa email y contraseña
+   - `AuthViewModel.login()` valida contra Firebase
+   - Si es exitoso, navega a MainActivity
+   - Auto-navegación si usuario ya estaba autenticado
+
+3. **Logout**:
+   - Disponible en 3 lugares: Drawer, Menú, Bottom Navigation
+   - `FirebaseAuth.signOut()` cierra sesión
+   - Limpia activity stack y vuelve a LoginActivity
+
+### Configuración Requerida
+
+Para que Firebase funcione correctamente:
+
+1. **google-services.json**: Descargar desde Firebase Console y colocar en `app/`
+2. **Firebase Console**: Crear proyecto, habilitar Authentication y Firestore
+3. **Reglas de Firestore** (recomendado):
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read, write: if request.auth.uid == userId;
+    }
+  }
+}
+```
+
+## Componentes Clave
 - **`AdapterMoto.kt`**: Adaptador del `RecyclerView`. Se encarga de vincular la lista de motos con las vistas (`CardView`) y de gestionar los eventos de clic (eliminar, editar).
 - **`ViewHMoto.kt`**: `ViewHolder` para el adaptador, que mantiene las referencias a las vistas de cada elemento de la lista.
 - **`MotoDialogFragment.kt`**: `DialogFragment` que muestra un formulario para añadir o editar los detalles de una moto, incluyendo la selección de imágenes.
@@ -32,6 +162,12 @@ Este es un proyecto de Android que demuestra el uso de `RecyclerView` para mostr
 ## Tecnologías y Librerías
 
 - **Lenguaje**: Kotlin
+- **Arquitectura**: Clean Architecture + MVVM
+- **Gestión de Estado**:
+  - `ViewModel`: Para gestionar la lógica de presentación
+  - `LiveData`: Para reactividad y observación de cambios
+- **Inyección de Dependencias**:
+  - `Hilt`: Framework de inyección de dependencias simplificado
 - **UI**: 
   - `ViewBinding`: Para acceder a las vistas de forma segura y concisa.
   - `RecyclerView`: Para mostrar listas de datos de manera eficiente.
@@ -40,6 +176,11 @@ Este es un proyecto de Android que demuestra el uso de `RecyclerView` para mostr
 - **Gestión de Imágenes**:
   - `ActivityResultContracts`: API moderna para obtener resultados de actividades, como la selección de imágenes.
   - `Glide`: Librería para cargar y mostrar imágenes de forma eficiente y fluida.
+- **Backend & Persistencia (v1.4+)**:
+  - `Firebase Authentication`: Para autenticación con email/password
+  - `Cloud Firestore`: Base de datos NoSQL en la nube para sincronización en tiempo real
+- **Navegación**:
+  - `Navigation Component`: Para gestionar la navegación entre fragmentos y actividades
 
 ## Cómo Ejecutar el Proyecto
 
