@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -15,12 +16,14 @@ import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import iesvdc.segdodam.recyclerviewmotos.databinding.ActivityMainBinding
 import iesvdc.segdodam.recyclerviewmotos.databinding.NavHeaderBinding
+import iesvdc.segdodam.recyclerviewmotos.ui.auth.AuthViewModel
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,8 +114,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun logout() {
+        // Desautenticar de Firebase
+        authViewModel.logout()
         // Vuelve a la pantalla de login y cierra esta actividad
         val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
     }

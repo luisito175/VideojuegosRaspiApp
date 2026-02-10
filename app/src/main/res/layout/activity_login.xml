@@ -24,7 +24,7 @@
         android:id="@+id/edtUsuario"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Usuario"
+        android:hint="Email"
         android:textColor="@color/md_theme_onBackground"
         android:textColorHint="@color/md_theme_onSurface"
         app:layout_constraintTop_toBottomOf="@id/tvLoginTitle"
