@@ -15,9 +15,11 @@ Este es un proyecto de Android que demuestra el uso de `RecyclerView` para mostr
 - **Arquitectura Simple**: Emplea un patrón `Controller` para separar la lógica de negocio de la interfaz de usuario, facilitando el mantenimiento del código.
 
 ## Demostraciones en Vídeo
+- **Versión 1.4**: [Ver demostración en YouTube](https://youtu.be/tDCTmhSgeQI)
 - **Versión 1.3**: [Ver demostración en YouTube](https://youtu.be/ug9qEMpEm7k)
 - **Versión 1.2**: [Ver demostración en YouTube](https://youtu.be/ULpFjaF5WlY)
 - **Versión 1.1**: [Ver demostración en YouTube](https://youtu.be/6ClddBkvGy8)
+
 
 ## Actualización v1.4: Arquitectura MVVM + Firebase
 
