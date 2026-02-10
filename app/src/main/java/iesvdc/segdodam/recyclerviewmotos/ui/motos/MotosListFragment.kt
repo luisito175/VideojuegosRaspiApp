@@ -9,11 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import iesvdc.segdodam.recyclerviewmotos.Adapter.AdapterMoto
 import iesvdc.segdodam.recyclerviewmotos.Dialogs.MotoDialogFragment
 import iesvdc.segdodam.recyclerviewmotos.R
 import iesvdc.segdodam.recyclerviewmotos.databinding.FragmentMotosListBinding
 
+@AndroidEntryPoint
 class MotosListFragment : Fragment() {
 
     private var _binding: FragmentMotosListBinding? = null

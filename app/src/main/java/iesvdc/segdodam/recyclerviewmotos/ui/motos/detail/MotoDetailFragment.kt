@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import iesvdc.segdodam.recyclerviewmotos.databinding.FragmentMotoDetailBinding
 import iesvdc.segdodam.recyclerviewmotos.models.Moto
 import iesvdc.segdodam.recyclerviewmotos.ui.motos.MotosViewModel
 
+@AndroidEntryPoint
 class MotoDetailFragment : Fragment() {
 
     private var _binding: FragmentMotoDetailBinding? = null
