@@ -27,13 +27,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="Nombre de Usuario"
+        android:text="Catálogo de Videojuegos"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:id="@+id/tv_header_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="usuario@email.com" />
+        android:text="" />
 
 </LinearLayout>

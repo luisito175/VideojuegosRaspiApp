@@ -21,62 +21,58 @@
             style="@style/Widget.App.TextView.Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Añadir / Editar Moto"
+            android:text="Añadir / Editar Videojuego"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <ImageView
-            android:id="@+id/imgPreview"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="16dp"
-            android:contentDescription="Imagen de la moto"
-            android:scaleType="centerCrop"
-            android:src="@android:drawable/ic_menu_gallery"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTitulo" />
-
-        <Button
-            android:id="@+id/btnSelectImage"
-            style="@style/Widget.App.Button.Secondary"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Seleccionar imagen"
-            app:layout_constraintStart_toEndOf="@+id/imgPreview"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/imgPreview"/>
-
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilMarca"
+            android:id="@+id/tilNombre"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="Marca"
-            app:layout_constraintTop_toBottomOf="@id/imgPreview"
+            android:hint="Nombre"
+            app:layout_constraintTop_toBottomOf="@id/tvTitulo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtMarca"
+                android:id="@+id/edtNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilModelo"
+            android:id="@+id/tilPrecio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Modelo"
-            app:layout_constraintTop_toBottomOf="@id/tilMarca"
+            android:hint="Precio"
+            app:layout_constraintTop_toBottomOf="@id/tilNombre"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtModelo"
+                android:id="@+id/edtPrecio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPlataforma"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Plataforma"
+            app:layout_constraintTop_toBottomOf="@id/tilPrecio"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtPlataforma"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -88,29 +84,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="Características"
-            app:layout_constraintTop_toBottomOf="@id/tilModelo"
+            app:layout_constraintTop_toBottomOf="@id/tilPlataforma"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtCaracteristicas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilImagen"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="URL Imagen"
-            app:layout_constraintTop_toBottomOf="@id/tilCaracteristicas"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtImagen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -123,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Aceptar"
-            app:layout_constraintTop_toBottomOf="@id/tilImagen"
+            app:layout_constraintTop_toBottomOf="@id/tilCaracteristicas"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

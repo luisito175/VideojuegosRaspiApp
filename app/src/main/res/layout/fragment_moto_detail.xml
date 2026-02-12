@@ -11,36 +11,35 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/iv_detail_image"
-            android:layout_width="0dp"
-            android:layout_height="250dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:src="@tools:sample/backgrounds/scenic" />
-
         <TextView
-            android:id="@+id/tv_detail_marca"
+            android:id="@+id/tv_detail_nombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_detail_image"
-            tools:text="Marca de la Moto" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Nombre del videojuego" />
 
         <TextView
-            android:id="@+id/tv_detail_modelo"
+            android:id="@+id/tv_detail_plataforma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_detail_marca"
-            tools:text="Modelo de la Moto" />
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_nombre"
+            tools:text="Plataforma" />
+
+        <TextView
+            android:id="@+id/tv_detail_precio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_plataforma"
+            tools:text="59.99 €" />
 
         <TextView
             android:id="@+id/tv_detail_caracteristicas_label"
@@ -50,7 +49,7 @@
             android:text="Características:"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_detail_modelo" />
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_precio" />
 
         <TextView
             android:id="@+id/tv_detail_caracteristicas"

@@ -4,74 +4,79 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import iesvdc.segdodam.recyclerviewmotos.domain.models.MotoEntity
+import iesvdc.segdodam.recyclerviewmotos.domain.models.VideoGameEntity
 import iesvdc.segdodam.recyclerviewmotos.domain.usecases.*
-import iesvdc.segdodam.recyclerviewmotos.models.Moto
+import iesvdc.segdodam.recyclerviewmotos.models.VideoGame
 import javax.inject.Inject
 
 @HiltViewModel
 class MotosViewModel @Inject constructor(
-    private val getAllMotosUseCase: GetAllMotosUseCase,
-    private val addMotoUseCase: AddMotoUseCase,
-    private val updateMotoUseCase: UpdateMotoUseCase,
-    private val deleteMotoUseCase: DeleteMotoUseCase,
-    private val getMotoAtUseCase: GetMotoAtUseCase
+    private val getAllVideoGamesUseCase: GetAllVideoGamesUseCase,
+    private val addVideoGameUseCase: AddVideoGameUseCase,
+    private val updateVideoGameUseCase: UpdateVideoGameUseCase,
+    private val deleteVideoGameUseCase: DeleteVideoGameUseCase,
+    private val getVideoGameAtUseCase: GetVideoGameAtUseCase
 ) : ViewModel() {
 
-    private val _motos = MutableLiveData<MutableList<Moto>>()
-    val motos: LiveData<MutableList<Moto>> = _motos
+    private val _motos = MutableLiveData<MutableList<VideoGame>>()
+    val motos: LiveData<MutableList<VideoGame>> = _motos
 
     init {
         loadMotos()
     }
 
     private fun loadMotos() {
-        val motosFromUseCase = getAllMotosUseCase()
-        val motosList = motosFromUseCase.map { entity ->
-            Moto(
-                marca = entity.marca,
-                modelo = entity.modelo,
-                caracteristicas = entity.caracteristicas,
-                imagen = entity.imagen
+        val videoGamesFromUseCase = getAllVideoGamesUseCase()
+        val videoGamesList = videoGamesFromUseCase.map { entity ->
+            VideoGame(
+                id = entity.id,
+                nombre = entity.nombre,
+                precio = entity.precio,
+                plataforma = entity.plataforma,
+                caracteristicas = entity.caracteristicas
             )
         }.toMutableList()
-        _motos.value = motosList
+        _motos.value = videoGamesList
     }
 
-    fun addMoto(nuevaMoto: Moto) {
-        val entity = MotoEntity(
-            marca = nuevaMoto.marca,
-            modelo = nuevaMoto.modelo,
-            caracteristicas = nuevaMoto.caracteristicas,
-            imagen = nuevaMoto.imagen
+    fun addMoto(nuevoVideoGame: VideoGame) {
+        val nextId = (_motos.value?.maxOfOrNull { it.id } ?: 0) + 1
+        val entity = VideoGameEntity(
+            id = nextId,
+            nombre = nuevoVideoGame.nombre,
+            precio = nuevoVideoGame.precio,
+            plataforma = nuevoVideoGame.plataforma,
+            caracteristicas = nuevoVideoGame.caracteristicas
         )
-        addMotoUseCase(entity)
+        addVideoGameUseCase(entity)
         loadMotos()
     }
 
     fun deleteMoto(pos: Int) {
-        deleteMotoUseCase(pos)
+        deleteVideoGameUseCase(pos)
         loadMotos()
     }
 
-    fun updateMoto(pos: Int, motoActualizada: Moto) {
-        val entity = MotoEntity(
-            marca = motoActualizada.marca,
-            modelo = motoActualizada.modelo,
-            caracteristicas = motoActualizada.caracteristicas,
-            imagen = motoActualizada.imagen
+    fun updateMoto(pos: Int, videoGameActualizado: VideoGame) {
+        val entity = VideoGameEntity(
+            id = videoGameActualizado.id,
+            nombre = videoGameActualizado.nombre,
+            precio = videoGameActualizado.precio,
+            plataforma = videoGameActualizado.plataforma,
+            caracteristicas = videoGameActualizado.caracteristicas
         )
-        updateMotoUseCase(pos, entity)
+        updateVideoGameUseCase(pos, entity)
         loadMotos()
     }
 
-    fun getMotoAt(pos: Int): Moto? {
-        val entity = getMotoAtUseCase(pos) ?: return null
-        return Moto(
-            marca = entity.marca,
-            modelo = entity.modelo,
-            caracteristicas = entity.caracteristicas,
-            imagen = entity.imagen
+    fun getMotoAt(pos: Int): VideoGame? {
+        val entity = getVideoGameAtUseCase(pos) ?: return null
+        return VideoGame(
+            id = entity.id,
+            nombre = entity.nombre,
+            precio = entity.precio,
+            plataforma = entity.plataforma,
+            caracteristicas = entity.caracteristicas
         )
     }
 }

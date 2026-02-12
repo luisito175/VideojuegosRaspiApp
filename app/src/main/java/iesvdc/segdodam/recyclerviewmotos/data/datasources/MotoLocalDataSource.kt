@@ -1,47 +1,47 @@
 package iesvdc.segdodam.recyclerviewmotos.data.datasources
 
-import iesvdc.segdodam.recyclerviewmotos.domain.models.MotoEntity
+import iesvdc.segdodam.recyclerviewmotos.domain.models.VideoGameEntity
 
 /**
- * Data source local que gestiona las motos en memoria.
+ * Data source local que gestiona los videojuegos en memoria.
  */
-interface MotoLocalDataSource {
-    fun getAllMotos(): List<MotoEntity>
-    fun addMoto(moto: MotoEntity)
-    fun updateMoto(pos: Int, moto: MotoEntity)
-    fun deleteMoto(pos: Int)
-    fun getMotoAt(pos: Int): MotoEntity?
-    fun setInitialMotos(list: List<MotoEntity>)
+interface VideoGameLocalDataSource {
+    fun getAllVideoGames(): List<VideoGameEntity>
+    fun addVideoGame(videoGame: VideoGameEntity)
+    fun updateVideoGame(pos: Int, videoGame: VideoGameEntity)
+    fun deleteVideoGame(pos: Int)
+    fun getVideoGameAt(pos: Int): VideoGameEntity?
+    fun setInitialVideoGames(list: List<VideoGameEntity>)
 }
 
 /**
  * Implementación del data source local.
  */
-class MotoLocalDataSourceImpl : MotoLocalDataSource {
-    private val motos = mutableListOf<MotoEntity>()
+class VideoGameLocalDataSourceImpl : VideoGameLocalDataSource {
+    private val videoGames = mutableListOf<VideoGameEntity>()
 
-    override fun getAllMotos(): List<MotoEntity> = motos
+    override fun getAllVideoGames(): List<VideoGameEntity> = videoGames
 
-    override fun addMoto(moto: MotoEntity) {
-        motos.add(moto)
+    override fun addVideoGame(videoGame: VideoGameEntity) {
+        videoGames.add(videoGame)
     }
 
-    override fun updateMoto(pos: Int, moto: MotoEntity) {
-        if (pos in motos.indices) {
-            motos[pos] = moto
+    override fun updateVideoGame(pos: Int, videoGame: VideoGameEntity) {
+        if (pos in videoGames.indices) {
+            videoGames[pos] = videoGame
         }
     }
 
-    override fun deleteMoto(pos: Int) {
-        if (pos in motos.indices) {
-            motos.removeAt(pos)
+    override fun deleteVideoGame(pos: Int) {
+        if (pos in videoGames.indices) {
+            videoGames.removeAt(pos)
         }
     }
 
-    override fun getMotoAt(pos: Int): MotoEntity? = motos.getOrNull(pos)
+    override fun getVideoGameAt(pos: Int): VideoGameEntity? = videoGames.getOrNull(pos)
 
-    override fun setInitialMotos(list: List<MotoEntity>) {
-        motos.clear()
-        motos.addAll(list)
+    override fun setInitialVideoGames(list: List<VideoGameEntity>) {
+        videoGames.clear()
+        videoGames.addAll(list)
     }
 }

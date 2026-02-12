@@ -1,26 +1,28 @@
 package iesvdc.segdodam.recyclerviewmotos.data.repositories
 
-import iesvdc.segdodam.recyclerviewmotos.data.datasources.MotoLocalDataSource
-import iesvdc.segdodam.recyclerviewmotos.domain.models.MotoEntity
-import iesvdc.segdodam.recyclerviewmotos.domain.repositories.MotoRepository
+import iesvdc.segdodam.recyclerviewmotos.data.datasources.VideoGameLocalDataSource
+import iesvdc.segdodam.recyclerviewmotos.domain.models.VideoGameEntity
+import iesvdc.segdodam.recyclerviewmotos.domain.repositories.VideoGameRepository
 
 /**
  * Implementación del repositorio en la capa de datos.
  * Implementa la interfaz del dominio y delega al data source.
  */
-class MotoRepositoryImpl(
-    private val localDataSource: MotoLocalDataSource
-) : MotoRepository {
+class VideoGameRepositoryImpl(
+    private val localDataSource: VideoGameLocalDataSource
+) : VideoGameRepository {
 
-    override fun getAllMotos(): List<MotoEntity> = localDataSource.getAllMotos()
+    override fun getAllVideoGames(): List<VideoGameEntity> = localDataSource.getAllVideoGames()
 
-    override fun addMoto(moto: MotoEntity) = localDataSource.addMoto(moto)
+    override fun addVideoGame(videoGame: VideoGameEntity) = localDataSource.addVideoGame(videoGame)
 
-    override fun updateMoto(pos: Int, moto: MotoEntity) = localDataSource.updateMoto(pos, moto)
+    override fun updateVideoGame(pos: Int, videoGame: VideoGameEntity) =
+        localDataSource.updateVideoGame(pos, videoGame)
 
-    override fun deleteMoto(pos: Int) = localDataSource.deleteMoto(pos)
+    override fun deleteVideoGame(pos: Int) = localDataSource.deleteVideoGame(pos)
 
-    override fun getMotoAt(pos: Int): MotoEntity? = localDataSource.getMotoAt(pos)
+    override fun getVideoGameAt(pos: Int): VideoGameEntity? = localDataSource.getVideoGameAt(pos)
 
-    override fun setInitialMotos(list: List<MotoEntity>) = localDataSource.setInitialMotos(list)
+    override fun setInitialVideoGames(list: List<VideoGameEntity>) =
+        localDataSource.setInitialVideoGames(list)
 }

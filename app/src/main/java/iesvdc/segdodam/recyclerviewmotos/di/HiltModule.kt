@@ -4,10 +4,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import iesvdc.segdodam.recyclerviewmotos.data.datasources.MotoLocalDataSource
-import iesvdc.segdodam.recyclerviewmotos.data.datasources.MotoLocalDataSourceImpl
-import iesvdc.segdodam.recyclerviewmotos.data.repositories.MotoRepositoryImpl
-import iesvdc.segdodam.recyclerviewmotos.domain.repositories.MotoRepository
+import iesvdc.segdodam.recyclerviewmotos.data.datasources.VideoGameLocalDataSource
+import iesvdc.segdodam.recyclerviewmotos.data.datasources.VideoGameLocalDataSourceImpl
+import iesvdc.segdodam.recyclerviewmotos.data.repositories.VideoGameRepositoryImpl
+import iesvdc.segdodam.recyclerviewmotos.domain.repositories.VideoGameRepository
 import iesvdc.segdodam.recyclerviewmotos.domain.usecases.*
 import javax.inject.Singleton
 
@@ -20,63 +20,63 @@ object HiltModule {
 
     @Singleton
     @Provides
-    fun provideMotoLocalDataSource(): MotoLocalDataSource {
-        return MotoLocalDataSourceImpl()
+    fun provideVideoGameLocalDataSource(): VideoGameLocalDataSource {
+        return VideoGameLocalDataSourceImpl()
     }
 
     @Singleton
     @Provides
-    fun provideMotoRepository(
-        dataSource: MotoLocalDataSource
-    ): MotoRepository {
-        return MotoRepositoryImpl(dataSource)
+    fun provideVideoGameRepository(
+        dataSource: VideoGameLocalDataSource
+    ): VideoGameRepository {
+        return VideoGameRepositoryImpl(dataSource)
     }
 
     @Singleton
     @Provides
-    fun provideGetAllMotosUseCase(
-        repository: MotoRepository
-    ): GetAllMotosUseCase {
-        return GetAllMotosUseCase(repository)
+    fun provideGetAllVideoGamesUseCase(
+        repository: VideoGameRepository
+    ): GetAllVideoGamesUseCase {
+        return GetAllVideoGamesUseCase(repository)
     }
 
     @Singleton
     @Provides
-    fun provideAddMotoUseCase(
-        repository: MotoRepository
-    ): AddMotoUseCase {
-        return AddMotoUseCase(repository)
+    fun provideAddVideoGameUseCase(
+        repository: VideoGameRepository
+    ): AddVideoGameUseCase {
+        return AddVideoGameUseCase(repository)
     }
 
     @Singleton
     @Provides
-    fun provideUpdateMotoUseCase(
-        repository: MotoRepository
-    ): UpdateMotoUseCase {
-        return UpdateMotoUseCase(repository)
+    fun provideUpdateVideoGameUseCase(
+        repository: VideoGameRepository
+    ): UpdateVideoGameUseCase {
+        return UpdateVideoGameUseCase(repository)
     }
 
     @Singleton
     @Provides
-    fun provideDeleteMotoUseCase(
-        repository: MotoRepository
-    ): DeleteMotoUseCase {
-        return DeleteMotoUseCase(repository)
+    fun provideDeleteVideoGameUseCase(
+        repository: VideoGameRepository
+    ): DeleteVideoGameUseCase {
+        return DeleteVideoGameUseCase(repository)
     }
 
     @Singleton
     @Provides
-    fun provideGetMotoAtUseCase(
-        repository: MotoRepository
-    ): GetMotoAtUseCase {
-        return GetMotoAtUseCase(repository)
+    fun provideGetVideoGameAtUseCase(
+        repository: VideoGameRepository
+    ): GetVideoGameAtUseCase {
+        return GetVideoGameAtUseCase(repository)
     }
 
     @Singleton
     @Provides
-    fun provideSetInitialMotosUseCase(
-        repository: MotoRepository
-    ): SetInitialMotosUseCase {
-        return SetInitialMotosUseCase(repository)
+    fun provideSetInitialVideoGamesUseCase(
+        repository: VideoGameRepository
+    ): SetInitialVideoGamesUseCase {
+        return SetInitialVideoGamesUseCase(repository)
     }
 }

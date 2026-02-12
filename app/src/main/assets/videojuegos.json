@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "nombre": "The Legend of Zelda: Breath of the Wild",
+    "precio": 59.99,
+    "plataforma": "Nintendo Switch",
+    "caracteristicas": "Mundo abierto, exploración libre y puzles basados en física."
+  },
+  {
+    "id": 2,
+    "nombre": "God of War Ragnarök",
+    "precio": 69.99,
+    "plataforma": "PlayStation 5",
+    "caracteristicas": "Acción cinematográfica, combate visceral y narrativa épica."
+  },
+  {
+    "id": 3,
+    "nombre": "Halo Infinite",
+    "precio": 49.99,
+    "plataforma": "Xbox Series X|S",
+    "caracteristicas": "Shooter en primera persona con campaña y multijugador expansivo."
+  },
+  {
+    "id": 4,
+    "nombre": "Hades",
+    "precio": 24.99,
+    "plataforma": "PC",
+    "caracteristicas": "Roguelike rápido con progresión y narrativa dinámica."
+  },
+  {
+    "id": 5,
+    "nombre": "Elden Ring",
+    "precio": 59.99,
+    "plataforma": "PlayStation 5",
+    "caracteristicas": "RPG de acción con mundo abierto y alta dificultad."
+  },
+  {
+    "id": 6,
+    "nombre": "Stardew Valley",
+    "precio": 14.99,
+    "plataforma": "Nintendo Switch",
+    "caracteristicas": "Simulador de granja con exploración, relaciones y crafting."
+  }
+]

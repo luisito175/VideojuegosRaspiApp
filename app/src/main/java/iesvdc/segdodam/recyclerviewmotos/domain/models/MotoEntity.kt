@@ -1,12 +1,13 @@
 package iesvdc.segdodam.recyclerviewmotos.domain.models
 
 /**
- * Entity del dominio que representa una motocicleta.
+ * Entity del dominio que representa un videojuego.
  * No tiene dependencias externas.
  */
-data class MotoEntity(
-    val marca: String,
-    val modelo: String,
-    val caracteristicas: String,
-    val imagen: String
+data class VideoGameEntity(
+    val id: Int,
+    val nombre: String,
+    val precio: Double,
+    val plataforma: String,
+    val caracteristicas: String
 )

@@ -19,47 +19,46 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/img_foto_moto"
-            android:layout_width="120dp"
-            android:layout_height="0dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
         <TextView
-            android:id="@+id/txt_marca"
+            android:id="@+id/txt_nombre"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-            app:layout_constraintStart_toEndOf="@id/img_foto_moto"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnEdit"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Yamaha" />
+            tools:text="The Legend of Zelda" />
 
         <TextView
-            android:id="@+id/txt_modelo"
+            android:id="@+id/txt_plataforma"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-            app:layout_constraintStart_toEndOf="@id/img_foto_moto"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnEdit"
-            app:layout_constraintTop_toBottomOf="@id/txt_marca"
-            tools:text="MT-07" />
+            app:layout_constraintTop_toBottomOf="@id/txt_nombre"
+            tools:text="Nintendo Switch" />
+
+        <TextView
+            android:id="@+id/txt_precio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnEdit"
+            app:layout_constraintTop_toBottomOf="@id/txt_plataforma"
+            tools:text="59.99 €" />
 
         <TextView
             android:id="@+id/txt_caracteristicas"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
@@ -68,9 +67,9 @@
             android:textAppearance="@style/TextAppearance.Material3.BodySmall"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnEdit"
-            app:layout_constraintStart_toEndOf="@id/img_foto_moto"
-            app:layout_constraintTop_toBottomOf="@id/txt_modelo"
-            tools:text="Motor CP2 de 690 cc, chasis compacto y ágil, diseño de última generación..." />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_precio"
+            tools:text="Explora un mundo abierto con puzles, acción y exploración." />
 
         <ImageButton
             android:id="@+id/btnEdit"

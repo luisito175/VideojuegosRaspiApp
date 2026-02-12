@@ -1,46 +1,47 @@
 package iesvdc.segdodam.recyclerviewmotos.domain.usecases
 
-import iesvdc.segdodam.recyclerviewmotos.domain.models.MotoEntity
-import iesvdc.segdodam.recyclerviewmotos.domain.repositories.MotoRepository
+import iesvdc.segdodam.recyclerviewmotos.domain.models.VideoGameEntity
+import iesvdc.segdodam.recyclerviewmotos.domain.repositories.VideoGameRepository
 
 /**
- * Caso de uso para obtener todas las motos.
+ * Caso de uso para obtener todos los videojuegos.
  */
-class GetAllMotosUseCase(private val repository: MotoRepository) {
-    operator fun invoke(): List<MotoEntity> = repository.getAllMotos()
+class GetAllVideoGamesUseCase(private val repository: VideoGameRepository) {
+    operator fun invoke(): List<VideoGameEntity> = repository.getAllVideoGames()
 }
 
 /**
- * Caso de uso para añadir una moto.
+ * Caso de uso para añadir un videojuego.
  */
-class AddMotoUseCase(private val repository: MotoRepository) {
-    operator fun invoke(moto: MotoEntity) = repository.addMoto(moto)
+class AddVideoGameUseCase(private val repository: VideoGameRepository) {
+    operator fun invoke(videoGame: VideoGameEntity) = repository.addVideoGame(videoGame)
 }
 
 /**
- * Caso de uso para actualizar una moto.
+ * Caso de uso para actualizar un videojuego.
  */
-class UpdateMotoUseCase(private val repository: MotoRepository) {
-    operator fun invoke(pos: Int, moto: MotoEntity) = repository.updateMoto(pos, moto)
+class UpdateVideoGameUseCase(private val repository: VideoGameRepository) {
+    operator fun invoke(pos: Int, videoGame: VideoGameEntity) =
+        repository.updateVideoGame(pos, videoGame)
 }
 
 /**
- * Caso de uso para eliminar una moto.
+ * Caso de uso para eliminar un videojuego.
  */
-class DeleteMotoUseCase(private val repository: MotoRepository) {
-    operator fun invoke(pos: Int) = repository.deleteMoto(pos)
+class DeleteVideoGameUseCase(private val repository: VideoGameRepository) {
+    operator fun invoke(pos: Int) = repository.deleteVideoGame(pos)
 }
 
 /**
- * Caso de uso para obtener una moto en una posición.
+ * Caso de uso para obtener un videojuego en una posición.
  */
-class GetMotoAtUseCase(private val repository: MotoRepository) {
-    operator fun invoke(pos: Int): MotoEntity? = repository.getMotoAt(pos)
+class GetVideoGameAtUseCase(private val repository: VideoGameRepository) {
+    operator fun invoke(pos: Int): VideoGameEntity? = repository.getVideoGameAt(pos)
 }
 
 /**
- * Caso de uso para establecer las motos iniciales.
+ * Caso de uso para establecer los videojuegos iniciales.
  */
-class SetInitialMotosUseCase(private val repository: MotoRepository) {
-    operator fun invoke(list: List<MotoEntity>) = repository.setInitialMotos(list)
+class SetInitialVideoGamesUseCase(private val repository: VideoGameRepository) {
+    operator fun invoke(list: List<VideoGameEntity>) = repository.setInitialVideoGames(list)
 }

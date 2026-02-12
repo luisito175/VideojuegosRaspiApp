@@ -1,10 +1,8 @@
 package iesvdc.segdodam.recyclerviewmotos
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -16,14 +14,12 @@ import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import iesvdc.segdodam.recyclerviewmotos.databinding.ActivityMainBinding
 import iesvdc.segdodam.recyclerviewmotos.databinding.NavHeaderBinding
-import iesvdc.segdodam.recyclerviewmotos.ui.auth.AuthViewModel
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,21 +53,12 @@ class MainActivity : AppCompatActivity() {
         // 3. Lógica de la cabecera del Drawer
         setupNavHeader(navView)
 
-        // 4. Lógica para el botón de Logout en el Drawer
-        setupLogoutAction(navView)
-
-        // 5. Lógica para el botón de Logout en la barra inferior
+        // 4. Navegación normal en la barra inferior
         bottomNavView.setOnItemSelectedListener { item ->
-            if (item.itemId == R.id.logout) {
-                logout()
-                true
-            } else {
-                // Navegación normal
-                val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as androidx.navigation.fragment.NavHostFragment
-                val navController = navHostFragment.navController
-                navController.navigate(item.itemId)
-                true
-            }
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as androidx.navigation.fragment.NavHostFragment
+            val navController = navHostFragment.navController
+            navController.navigate(item.itemId)
+            true
         }
     }
 
@@ -83,13 +70,6 @@ class MainActivity : AppCompatActivity() {
         headerBinding.tvHeaderEmail.text = "admin@concesionario.com"
     }
 
-    private fun setupLogoutAction(navView: NavigationView) {
-        navView.menu.findItem(R.id.logout).setOnMenuItemClickListener {
-            logout()
-            true
-        }
-    }
-
     // Infla el menú de opciones de la Toolbar (los 3 puntos)
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.options_menu, menu)
@@ -98,13 +78,7 @@ class MainActivity : AppCompatActivity() {
 
     // Maneja los clics en el menú de opciones de la Toolbar
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_logout -> {
-                logout()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
+        return super.onOptionsItemSelected(item)
     }
 
     // Permite que el NavController maneje el botón "arriba"/"atrás" de la Toolbar
@@ -113,13 +87,4 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    private fun logout() {
-        // Desautenticar de Firebase
-        authViewModel.logout()
-        // Vuelve a la pantalla de login y cierra esta actividad
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        finish()
-    }
 }

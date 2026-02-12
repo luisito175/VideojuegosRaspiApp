@@ -66,7 +66,7 @@ class MotosListFragment : Fragment() {
     private fun showAddMotoDialog() {
         val dialog = MotoDialogFragment(null) { nuevaMoto ->
             viewModel.addMoto(nuevaMoto)
-            Toast.makeText(context, "Moto añadida correctamente", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Videojuego añadido correctamente", Toast.LENGTH_SHORT).show()
         }
         dialog.show(parentFragmentManager, "ADD_MOTO")
     }
@@ -76,7 +76,7 @@ class MotosListFragment : Fragment() {
         if (moto != null) {
             val dialog = MotoDialogFragment(moto) { motoActualizada ->
                 viewModel.updateMoto(pos, motoActualizada)
-                Toast.makeText(context, "Moto actualizada", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Videojuego actualizado", Toast.LENGTH_SHORT).show()
             }
             dialog.show(parentFragmentManager, "EDIT_MOTO")
         }
@@ -86,7 +86,7 @@ class MotosListFragment : Fragment() {
         val moto = viewModel.getMotoAt(pos)
         if (moto != null) {
             viewModel.deleteMoto(pos)
-            Toast.makeText(context, "Moto '${moto.modelo}' eliminada", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Videojuego '${moto.nombre}' eliminado", Toast.LENGTH_SHORT).show()
         }
     }
 

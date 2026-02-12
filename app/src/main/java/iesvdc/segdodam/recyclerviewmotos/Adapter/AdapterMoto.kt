@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import iesvdc.segdodam.recyclerviewmotos.databinding.ObjetoMotoBinding
-import iesvdc.segdodam.recyclerviewmotos.models.Moto
+import iesvdc.segdodam.recyclerviewmotos.models.VideoGame
 
 class AdapterMoto(
-    private var listMoto: MutableList<Moto>,
+    private var listMoto: MutableList<VideoGame>,
     private val deleteOnClick: (Int) -> Unit,
     private val editOnClick: (Int) -> Unit,
     private val detailOnClick: (Int) -> Unit // Nuevo listener para navegar a detalles
@@ -28,7 +28,7 @@ class AdapterMoto(
     /**
      * Actualiza la lista de datos del adaptador y notifica al RecyclerView.
      */
-    fun updateData(newMotos: List<Moto>) {
+    fun updateData(newMotos: List<VideoGame>) {
         listMoto.clear()
         listMoto.addAll(newMotos)
         notifyDataSetChanged() // Notifica al RecyclerView que los datos han cambiado

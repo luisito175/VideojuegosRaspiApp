@@ -4,23 +4,16 @@
     <item
         android:id="@+id/motosListFragment"
         android:icon="@android:drawable/ic_menu_view"
-        android:title="Motos" />
+        android:title="Videojuegos" />
 
     <item
         android:id="@+id/galleryFragment"
         android:icon="@android:drawable/ic_menu_gallery"
-        android:title="Galería (Ejemplo)" />
+        android:title="Galería" />
 
     <item
         android:id="@+id/slideshowFragment"
         android:icon="@android:drawable/ic_menu_slideshow"
-        android:title="Slideshow (Ejemplo)" />
-
-    <group android:id="@+id/group_logout">
-        <item
-            android:id="@+id/logout"
-            android:icon="@android:drawable/ic_menu_close_clear_cancel"
-            android:title="Cerrar Sesión" />
-    </group>
+        android:title="Slideshow" />
 
 </menu>

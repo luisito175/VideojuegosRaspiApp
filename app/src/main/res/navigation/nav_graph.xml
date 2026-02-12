@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/motosListFragment"
         android:name="iesvdc.segdodam.recyclerviewmotos.ui.motos.MotosListFragment"
-        android:label="Listado de Motos"
+        android:label="Listado de Videojuegos"
         tools:layout="@layout/fragment_motos_list">
         <action
             android:id="@+id/action_motosListFragment_to_motoDetailFragment"
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/motoDetailFragment"
         android:name="iesvdc.segdodam.recyclerviewmotos.ui.motos.detail.MotoDetailFragment"
-        android:label="Detalles de la Moto"
+        android:label="Detalles del Videojuego"
         tools:layout="@layout/fragment_moto_detail">
         <argument
             android:name="moto_position"
