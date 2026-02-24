@@ -7,39 +7,40 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
-import iesvdc.segdodam.recyclerviewmotos.databinding.FragmentMotoDetailBinding
+import iesvdc.segdodam.recyclerviewmotos.databinding.FragmentVideoGameDetailBinding
 import iesvdc.segdodam.recyclerviewmotos.models.VideoGame
-import iesvdc.segdodam.recyclerviewmotos.ui.motos.MotosViewModel
+import iesvdc.segdodam.recyclerviewmotos.ui.motos.VideoGamesViewModel
 
 @AndroidEntryPoint
-class MotoDetailFragment : Fragment() {
+class VideoGameDetailFragment : Fragment() {
 
-    private var _binding: FragmentMotoDetailBinding? = null
+    private var _binding: FragmentVideoGameDetailBinding? = null
     private val binding get() = _binding!!
+    private var currentPosition: Int = -1
 
     // Obtiene la MISMA instancia del ViewModel que el fragmento de la lista
-    private val viewModel: MotosViewModel by activityViewModels()
+    private val viewModel: VideoGamesViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMotoDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentVideoGameDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Recoge el argumento (la posición de la moto)
-        val motoPosition = arguments?.getInt("moto_position", -1) ?: -1
+        // Recoge el argumento (la posición del videojuego)
+        currentPosition = arguments?.getInt("video_game_position", -1) ?: -1
 
-        if (motoPosition != -1) {
-            // Pide la moto al ViewModel en lugar de tener su propia lista
-            val moto = viewModel.getMotoAt(motoPosition)
-            if (moto != null) {
-                bind(moto)
+        if (currentPosition != -1) {
+            // Pide el videojuego al ViewModel en lugar de tener su propia lista
+            val videoGame = viewModel.getVideoGameAt(currentPosition)
+            if (videoGame != null) {
+                bind(videoGame)
             }
         }
     }
@@ -49,6 +50,15 @@ class MotoDetailFragment : Fragment() {
         binding.tvDetailPlataforma.text = videoGame.plataforma
         binding.tvDetailPrecio.text = String.format("%.2f €", videoGame.precio)
         binding.tvDetailCaracteristicas.text = videoGame.caracteristicas
+        binding.ratingBar.rating = videoGame.puntuacion
+        binding.tvDetailVisitas.text = "Visitas: ${videoGame.visitas}"
+
+        binding.ratingBar.setOnRatingBarChangeListener { _, rating, _ ->
+            val updated = videoGame.copy(puntuacion = rating)
+            if (currentPosition != -1) {
+                viewModel.updateVideoGame(currentPosition, updated)
+            }
+        }
     }
 
     override fun onDestroyView() {

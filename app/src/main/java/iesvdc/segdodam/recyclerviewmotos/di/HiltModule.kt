@@ -4,11 +4,14 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import iesvdc.segdodam.recyclerviewmotos.data.datasources.VideoGameLocalDataSource
-import iesvdc.segdodam.recyclerviewmotos.data.datasources.VideoGameLocalDataSourceImpl
+import iesvdc.segdodam.recyclerviewmotos.data.api.VideoGameApiService
+import iesvdc.segdodam.recyclerviewmotos.data.datasources.VideoGameRemoteDataSource
+import iesvdc.segdodam.recyclerviewmotos.data.datasources.VideoGameRemoteDataSourceImpl
 import iesvdc.segdodam.recyclerviewmotos.data.repositories.VideoGameRepositoryImpl
 import iesvdc.segdodam.recyclerviewmotos.domain.repositories.VideoGameRepository
 import iesvdc.segdodam.recyclerviewmotos.domain.usecases.*
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 /**
@@ -20,14 +23,33 @@ object HiltModule {
 
     @Singleton
     @Provides
-    fun provideVideoGameLocalDataSource(): VideoGameLocalDataSource {
-        return VideoGameLocalDataSourceImpl()
+    fun provideRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            // Use the ngrok HTTPS root provided by the user.
+            // Keep the trailing slash so endpoint paths are appended correctly.
+            .baseUrl("https://untrigonometric-postmaximal-candice.ngrok-free.dev/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideVideoGameApiService(retrofit: Retrofit): VideoGameApiService {
+        return retrofit.create(VideoGameApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideVideoGameRemoteDataSource(
+        apiService: VideoGameApiService
+    ): VideoGameRemoteDataSource {
+        return VideoGameRemoteDataSourceImpl(apiService)
     }
 
     @Singleton
     @Provides
     fun provideVideoGameRepository(
-        dataSource: VideoGameLocalDataSource
+        dataSource: VideoGameRemoteDataSource
     ): VideoGameRepository {
         return VideoGameRepositoryImpl(dataSource)
     }

@@ -7,21 +7,22 @@ import iesvdc.segdodam.recyclerviewmotos.domain.repositories.VideoGameRepository
  * Caso de uso para obtener todos los videojuegos.
  */
 class GetAllVideoGamesUseCase(private val repository: VideoGameRepository) {
-    operator fun invoke(): List<VideoGameEntity> = repository.getAllVideoGames()
+    suspend operator fun invoke(): List<VideoGameEntity> = repository.getAllVideoGames()
 }
 
 /**
  * Caso de uso para añadir un videojuego.
  */
 class AddVideoGameUseCase(private val repository: VideoGameRepository) {
-    operator fun invoke(videoGame: VideoGameEntity) = repository.addVideoGame(videoGame)
+    suspend operator fun invoke(videoGame: VideoGameEntity): List<VideoGameEntity> =
+        repository.addVideoGame(videoGame)
 }
 
 /**
  * Caso de uso para actualizar un videojuego.
  */
 class UpdateVideoGameUseCase(private val repository: VideoGameRepository) {
-    operator fun invoke(pos: Int, videoGame: VideoGameEntity) =
+    suspend operator fun invoke(pos: Int, videoGame: VideoGameEntity): List<VideoGameEntity> =
         repository.updateVideoGame(pos, videoGame)
 }
 
@@ -29,19 +30,20 @@ class UpdateVideoGameUseCase(private val repository: VideoGameRepository) {
  * Caso de uso para eliminar un videojuego.
  */
 class DeleteVideoGameUseCase(private val repository: VideoGameRepository) {
-    operator fun invoke(pos: Int) = repository.deleteVideoGame(pos)
+    suspend operator fun invoke(pos: Int, videoGame: VideoGameEntity): List<VideoGameEntity> =
+        repository.deleteVideoGame(pos, videoGame)
 }
 
 /**
  * Caso de uso para obtener un videojuego en una posición.
  */
 class GetVideoGameAtUseCase(private val repository: VideoGameRepository) {
-    operator fun invoke(pos: Int): VideoGameEntity? = repository.getVideoGameAt(pos)
+    suspend operator fun invoke(pos: Int): VideoGameEntity? = repository.getVideoGameAt(pos)
 }
 
 /**
  * Caso de uso para establecer los videojuegos iniciales.
  */
 class SetInitialVideoGamesUseCase(private val repository: VideoGameRepository) {
-    operator fun invoke(list: List<VideoGameEntity>) = repository.setInitialVideoGames(list)
+    suspend operator fun invoke(list: List<VideoGameEntity>) = repository.setInitialVideoGames(list)
 }

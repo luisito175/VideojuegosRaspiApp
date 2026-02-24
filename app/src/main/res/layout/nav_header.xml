@@ -17,7 +17,7 @@
         android:layout_height="80dp"
         android:contentDescription="@string/app_name"
         android:paddingTop="8dp"
-        app:srcCompat="@drawable/foto_perfil"
+        app:srcCompat="@drawable/ic_launcher_foreground"
         android:maxWidth="50px"
         android:maxHeight="50px"
         />

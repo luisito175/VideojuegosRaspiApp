@@ -7,7 +7,7 @@ Proyecto Android que usa `RecyclerView` para mostrar y gestionar un catálogo de
 - **Catálogo de videojuegos** con `RecyclerView` y tarjetas (`CardView`).
 - **CRUD completo** mediante un `DialogFragment` para crear/editar.
 - **Detalle** en un fragmento dedicado.
-- **Datos iniciales desde JSON** ubicado en `app/src/main/assets/videojuegos.json`.
+- **Consumo de API** con Retrofit (JSON Server para pruebas).
 - **Arquitectura MVVM + Clean Architecture** con Hilt para inyección de dependencias.
 
 ## Estructura de datos
@@ -24,9 +24,25 @@ data class VideoGame(
 )
 ```
 
-## Archivo JSON
+## API remota
 
-Ejemplo de entrada (ver `app/src/main/assets/videojuegos.json`):
+La app consume una API remota. La base actual es:
+
+```
+https://untrigonometric-postmaximal-candice.ngrok-free.dev/
+```
+
+El recurso de la API es `videogame`, con los endpoints:
+
+```
+GET    /videogame
+POST   /videogame
+PUT    /videogame/{id}
+DELETE /videogame/{id}
+```
+
+
+Ejemplo de registro en el `db.json` del JSON Server:
 
 ```json
 {
@@ -40,9 +56,9 @@ Ejemplo de entrada (ver `app/src/main/assets/videojuegos.json`):
 
 ## Componentes clave
 
-- **`AdapterMoto.kt` / `ViewHMoto.kt`**: Adaptador y ViewHolder del catálogo.
-- **`MotoDialogFragment.kt`**: Formulario para crear/editar videojuegos.
-- **`MotosViewModel.kt`**: Lógica de presentación y estado.
+- **`VideoGameAdapter` / `VideoGameViewHolder`**: Adaptador y ViewHolder del catálogo.
+- **`VideoGameDialogFragment`**: Formulario para crear/editar videojuegos.
+- **`VideoGamesViewModel`**: Lógica de presentación y estado.
 - **`ConcesionarioApp.kt`**: Carga el JSON inicial al iniciar la app.
 
 ## Tecnologías
@@ -55,6 +71,9 @@ Ejemplo de entrada (ver `app/src/main/assets/videojuegos.json`):
 
 ## Cómo ejecutar
 
-1. Abrir el proyecto en Android Studio.
-2. Sincronizar Gradle.
-3. Ejecutar en emulador o dispositivo físico.
+1. Ejecuta JSON Server en `http://localhost:3000`.
+2. Abre el proyecto en Android Studio.
+3. Sincroniza Gradle.
+4. Ejecuta en emulador o dispositivo.
+
+> Nota: por defecto el proyecto apunta al host ngrok indicado arriba.

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme for Day Mode -->
-    <style name="Theme.RecyclerViewMotos" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.VideoGames" parent="Theme.Material3.DayNight.NoActionBar">
         
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/md_theme_primary</item>

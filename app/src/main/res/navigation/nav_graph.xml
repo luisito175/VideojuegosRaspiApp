@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/motosListFragment">
+    app:startDestination="@id/videoGamesListFragment">
 
     <fragment
-        android:id="@+id/motosListFragment"
-        android:name="iesvdc.segdodam.recyclerviewmotos.ui.motos.MotosListFragment"
+        android:id="@+id/videoGamesListFragment"
+        android:name="iesvdc.segdodam.recyclerviewmotos.ui.motos.VideoGamesListFragment"
         android:label="Listado de Videojuegos"
-        tools:layout="@layout/fragment_motos_list">
+        tools:layout="@layout/fragment_video_games_list">
         <action
-            android:id="@+id/action_motosListFragment_to_motoDetailFragment"
-            app:destination="@id/motoDetailFragment" />
+            android:id="@+id/action_videoGamesListFragment_to_videoGameDetailFragment"
+            app:destination="@id/videoGameDetailFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/motoDetailFragment"
-        android:name="iesvdc.segdodam.recyclerviewmotos.ui.motos.detail.MotoDetailFragment"
+        android:id="@+id/videoGameDetailFragment"
+        android:name="iesvdc.segdodam.recyclerviewmotos.ui.motos.detail.VideoGameDetailFragment"
         android:label="Detalles del Videojuego"
-        tools:layout="@layout/fragment_moto_detail">
+        tools:layout="@layout/fragment_video_game_detail">
         <argument
-            android:name="moto_position"
+            android:name="video_game_position"
             app:argType="integer"
             android:defaultValue="-1" />
     </fragment>
@@ -31,11 +31,5 @@
         android:name="iesvdc.segdodam.recyclerviewmotos.ui.gallery.GalleryFragment"
         android:label="Galería"
         tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/slideshowFragment"
-        android:name="iesvdc.segdodam.recyclerviewmotos.ui.slideshow.SlideshowFragment"
-        android:label="Slideshow"
-        tools:layout="@layout/fragment_slideshow" />
 
 </navigation>

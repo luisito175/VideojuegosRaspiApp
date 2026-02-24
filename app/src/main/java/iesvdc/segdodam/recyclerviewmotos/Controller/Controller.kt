@@ -18,63 +18,82 @@ class Controller(
     private val setInitialVideoGamesUseCase: SetInitialVideoGamesUseCase
 ) {
 
-    fun getAllVideoGames(): List<VideoGame> {
+    suspend fun getAllVideoGames(): List<VideoGame> {
         return getAllVideoGamesUseCase().map { entity ->
             VideoGame(
                 id = entity.id,
                 nombre = entity.nombre,
                 precio = entity.precio,
                 plataforma = entity.plataforma,
-                caracteristicas = entity.caracteristicas
+                caracteristicas = entity.caracteristicas,
+                puntuacion = entity.puntuacion,
+                visitas = entity.visitas
             )
         }
     }
 
-    fun addVideoGame(videoGame: VideoGame) {
+    suspend fun addVideoGame(videoGame: VideoGame) {
         val entity = VideoGameEntity(
             id = videoGame.id,
             nombre = videoGame.nombre,
             precio = videoGame.precio,
             plataforma = videoGame.plataforma,
-            caracteristicas = videoGame.caracteristicas
+            caracteristicas = videoGame.caracteristicas,
+            puntuacion = videoGame.puntuacion,
+            visitas = videoGame.visitas
         )
         addVideoGameUseCase(entity)
     }
 
-    fun updateVideoGame(pos: Int, videoGame: VideoGame) {
+    suspend fun updateVideoGame(pos: Int, videoGame: VideoGame) {
         val entity = VideoGameEntity(
             id = videoGame.id,
             nombre = videoGame.nombre,
             precio = videoGame.precio,
             plataforma = videoGame.plataforma,
-            caracteristicas = videoGame.caracteristicas
+            caracteristicas = videoGame.caracteristicas,
+            puntuacion = videoGame.puntuacion,
+            visitas = videoGame.visitas
         )
         updateVideoGameUseCase(pos, entity)
     }
 
-    fun deleteVideoGame(pos: Int) {
-        deleteVideoGameUseCase(pos)
+    suspend fun deleteVideoGame(pos: Int, videoGame: VideoGame) {
+        val entity = VideoGameEntity(
+            id = videoGame.id,
+            nombre = videoGame.nombre,
+            precio = videoGame.precio,
+            plataforma = videoGame.plataforma,
+            caracteristicas = videoGame.caracteristicas,
+            puntuacion = videoGame.puntuacion,
+            visitas = videoGame.visitas
+        )
+        deleteVideoGameUseCase(pos, entity)
     }
 
-    fun getVideoGameAt(pos: Int): VideoGame? {
+    suspend fun getVideoGameAt(pos: Int): VideoGame? {
         val entity = getVideoGameAtUseCase(pos) ?: return null
         return VideoGame(
             id = entity.id,
             nombre = entity.nombre,
             precio = entity.precio,
             plataforma = entity.plataforma,
-            caracteristicas = entity.caracteristicas
+            caracteristicas = entity.caracteristicas,
+            puntuacion = entity.puntuacion,
+            visitas = entity.visitas
         )
     }
 
-    fun setInitialVideoGames(list: List<VideoGame>) {
+    suspend fun setInitialVideoGames(list: List<VideoGame>) {
         val entities = list.map { videoGame ->
             VideoGameEntity(
                 id = videoGame.id,
                 nombre = videoGame.nombre,
                 precio = videoGame.precio,
                 plataforma = videoGame.plataforma,
-                caracteristicas = videoGame.caracteristicas
+                caracteristicas = videoGame.caracteristicas,
+                puntuacion = videoGame.puntuacion,
+                visitas = videoGame.visitas
             )
         }
         setInitialVideoGamesUseCase(entities)

@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         // el icono de menú (hamburguesa) en lugar de la flecha de "atrás".
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.motosListFragment, R.id.galleryFragment, R.id.slideshowFragment
+                R.id.videoGamesListFragment, R.id.galleryFragment
             ), drawerLayout
         )
 

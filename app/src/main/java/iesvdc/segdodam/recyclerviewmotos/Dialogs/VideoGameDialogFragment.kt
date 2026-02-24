@@ -5,15 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import iesvdc.segdodam.recyclerviewmotos.databinding.DialogMotoBinding
+import iesvdc.segdodam.recyclerviewmotos.databinding.DialogVideoGameBinding
 import iesvdc.segdodam.recyclerviewmotos.models.VideoGame
 
-class MotoDialogFragment(
+class VideoGameDialogFragment(
     private val videoGame: VideoGame? = null,
     private val onSave: (VideoGame) -> Unit
 ) : DialogFragment() {
 
-    private var _binding: DialogMotoBinding? = null
+    private var _binding: DialogVideoGameBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -21,7 +21,7 @@ class MotoDialogFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DialogMotoBinding.inflate(inflater, container, false)
+        _binding = DialogVideoGameBinding.inflate(inflater, container, false)
         dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
         return binding.root
     }
@@ -29,7 +29,7 @@ class MotoDialogFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Si estamos editando, rellenamos los campos con los datos de la moto
+        // Si estamos editando, rellenamos los campos con los datos del videojuego
         videoGame?.let {
             binding.edtNombre.setText(it.nombre)
             binding.edtPrecio.setText(it.precio.toString())
@@ -45,7 +45,9 @@ class MotoDialogFragment(
                 nombre = binding.edtNombre.text.toString(),
                 precio = precio,
                 plataforma = binding.edtPlataforma.text.toString(),
-                caracteristicas = binding.edtCaracteristicas.text.toString()
+                caracteristicas = binding.edtCaracteristicas.text.toString(),
+                puntuacion = videoGame?.puntuacion ?: 0f,
+                visitas = videoGame?.visitas ?: 0L
             )
             onSave(nuevoVideoGame) // Llama a la función lambda que se le pasó al crear el diálogo
             dismiss()

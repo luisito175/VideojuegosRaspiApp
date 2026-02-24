@@ -1,31 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.motos.MotosListFragment">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:clipToPadding="false"
-    android:paddingTop="0dp"
-    android:paddingBottom="@dimen/custom_bottom_nav_height" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_moto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="@dimen/fab_margin_bottom"
-    android:contentDescription="Añadir videojuego"
-        android:src="@android:drawable/ic_input_add"
-        android:layout_gravity="bottom|end"
-        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/fragment_video_games_list" />
+</merge>
