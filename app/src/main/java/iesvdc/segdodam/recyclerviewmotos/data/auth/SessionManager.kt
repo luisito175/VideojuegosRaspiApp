@@ -18,6 +18,10 @@ class SessionManager @Inject constructor(
             .apply()
     }
 
+    fun saveUserId(userId: Int) {
+        prefs.edit().putInt(KEY_USER_ID, userId).apply()
+    }
+
     fun updateAccessToken(accessToken: String) {
         prefs.edit().putString(KEY_ACCESS, accessToken).apply()
     }
@@ -26,6 +30,11 @@ class SessionManager @Inject constructor(
 
     fun getRefreshToken(): String? = prefs.getString(KEY_REFRESH, null)
 
+    fun getUserId(): Int? {
+        val stored = prefs.getInt(KEY_USER_ID, -1)
+        return if (stored == -1) null else stored
+    }
+
     fun clear() {
         prefs.edit().clear().apply()
     }
@@ -33,5 +42,6 @@ class SessionManager @Inject constructor(
     companion object {
         private const val KEY_ACCESS = "access_token"
         private const val KEY_REFRESH = "refresh_token"
+        private const val KEY_USER_ID = "user_id"
     }
 }

@@ -15,7 +15,10 @@ class RegisterRepository @Inject constructor(
     suspend fun register(username: String, email: String, password: String) {
         val response = authApi.register(RegisterRequest(username, email, password))
         if (response.isSuccessful) {
-            response.body()?.let { sessionManager.saveTokens(it.accessToken, it.refreshToken) }
+            response.body()?.let {
+                sessionManager.saveTokens(it.accessToken, it.refreshToken)
+                sessionManager.saveUserId(it.user.id)
+            }
             return
         }
 
@@ -26,6 +29,7 @@ class RegisterRepository @Inject constructor(
             val body = loginResponse.body()
             if (body != null) {
                 sessionManager.saveTokens(body.accessToken, body.refreshToken)
+                sessionManager.saveUserId(body.user.id)
             }
             return
         }

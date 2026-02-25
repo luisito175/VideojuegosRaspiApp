@@ -8,15 +8,13 @@ import iesvdc.segdodam.recyclerviewmotos.models.VideoGame
 
 class VideoGameAdapter(
     private var videoGames: MutableList<VideoGame>,
-    private val deleteOnClick: (Int) -> Unit,
-    private val editOnClick: (Int) -> Unit,
-    private val detailOnClick: (Int) -> Unit // Nuevo listener para navegar a detalles
+    private val detailOnClick: (Int) -> Unit,
+    private val favoriteOnClick: (Int) -> Unit
 ) : RecyclerView.Adapter<VideoGameViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoGameViewHolder {
         val binding = ItemVideoGameBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        // Pasamos el nuevo listener al ViewHolder
-        return VideoGameViewHolder(binding, deleteOnClick, editOnClick, detailOnClick)
+        return VideoGameViewHolder(binding, detailOnClick, favoriteOnClick)
     }
 
     override fun onBindViewHolder(holder: VideoGameViewHolder, position: Int) {
@@ -33,4 +31,6 @@ class VideoGameAdapter(
         videoGames.addAll(newVideoGames)
         notifyDataSetChanged() // Notifica al RecyclerView que los datos han cambiado
     }
+
+    fun getItemAt(position: Int): VideoGame? = videoGames.getOrNull(position)
 }

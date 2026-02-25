@@ -61,25 +61,23 @@ class VideoGamesListFragment : Fragment() {
     private fun setupRecyclerView() {
         adapter = VideoGameAdapter(
             mutableListOf(),
-            ::deleteVideoGame,
-            ::showEditVideoGameDialog,
-            ::navigateToDetail
+            ::navigateToDetail,
+            { pos -> viewModel.toggleFavorite(pos) }
         )
         binding.myRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.myRecyclerView.adapter = adapter
     }
 
     private fun setupFab() {
-        binding.fabAddVideoGame.setOnClickListener {
-            showAddVideoGameDialog()
-        }
+        binding.fabAddVideoGame.isEnabled = false
+        binding.fabAddVideoGame.hide()
     }
 
     private fun observeViewModel() {
         // Observa el LiveData del ViewModel. Cada vez que la lista de videojuegos cambie,
         // este bloque se ejecutará y actualizará la interfaz.
-        viewModel.videoGames.observe(viewLifecycleOwner) {
-            adapter.updateData(it)
+        viewModel.videoGames.observe(viewLifecycleOwner) { list ->
+            adapter.updateData(list)
         }
     }
 
@@ -98,32 +96,7 @@ class VideoGamesListFragment : Fragment() {
         refreshJob = null
     }
 
-    private fun showAddVideoGameDialog() {
-        val dialog = VideoGameDialogFragment(null) { nuevoVideoGame ->
-            viewModel.addVideoGame(nuevoVideoGame)
-            viewModel.refresh()
-        }
-        dialog.show(parentFragmentManager, "ADD_VIDEO_GAME")
-    }
-
-    private fun showEditVideoGameDialog(pos: Int) {
-        val videoGame = viewModel.getVideoGameAt(pos)
-        if (videoGame != null) {
-            val dialog = VideoGameDialogFragment(videoGame) { videoGameActualizado ->
-                viewModel.updateVideoGame(pos, videoGameActualizado)
-                viewModel.refresh()
-            }
-            dialog.show(parentFragmentManager, "EDIT_VIDEO_GAME")
-        }
-    }
-
-    private fun deleteVideoGame(pos: Int) {
-        val videoGame = viewModel.getVideoGameAt(pos)
-        if (videoGame != null) {
-            viewModel.deleteVideoGame(pos)
-            viewModel.refresh()
-        }
-    }
+    // Catalog mode: no add/edit/delete actions.
 
     private fun navigateToDetail(pos: Int) {
         // Crea un Bundle para pasar la posición del videojuego

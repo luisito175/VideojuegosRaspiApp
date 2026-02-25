@@ -6,9 +6,8 @@ import iesvdc.segdodam.recyclerviewmotos.models.VideoGame
 
 class VideoGameViewHolder(
     private val binding: ItemVideoGameBinding,
-    private val deleteOnClick: (Int) -> Unit,
-    private val editOnClick: (Int) -> Unit,
-    private val detailOnClick: (Int) -> Unit // Se añade el listener para el detalle
+    private val detailOnClick: (Int) -> Unit,
+    private val favoriteOnClick: (Int) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun renderize(videoGame: VideoGame, position: Int) {
@@ -19,13 +18,20 @@ class VideoGameViewHolder(
         binding.txtPuntuacion.text = "Puntuación: ${videoGame.puntuacion.toInt()}/5"
         binding.txtVisitas.text = "Visitas: ${videoGame.visitas}"
 
-        // Listeners para los botones
-        binding.btnEdit.setOnClickListener { editOnClick(position) }
-        binding.btnDelete.setOnClickListener { deleteOnClick(position) }
+        val icon = if (videoGame.isFavorite) {
+            android.R.drawable.btn_star_big_on
+        } else {
+            android.R.drawable.btn_star_big_off
+        }
+        binding.btnFavorite.setImageResource(icon)
 
         // Listener para el clic en toda la tarjeta
         binding.root.setOnClickListener {
             detailOnClick(position)
+        }
+
+        binding.btnFavorite.setOnClickListener {
+            favoriteOnClick(position)
         }
     }
 }

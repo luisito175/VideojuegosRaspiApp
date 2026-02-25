@@ -16,6 +16,7 @@ import iesvdc.segdodam.recyclerviewmotos.domain.repositories.VideoGameRepository
 import iesvdc.segdodam.recyclerviewmotos.domain.usecases.*
 import com.google.gson.GsonBuilder
 import com.google.gson.Strictness
+import iesvdc.segdodam.recyclerviewmotos.data.local.dao.FavoriteVideoGameDao
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -73,7 +74,6 @@ object HiltModule {
         return retrofit.create(VideoGameApiService::class.java)
     }
 
-
     @Singleton
     @Provides
     fun provideVideoGameRemoteDataSource(
@@ -85,9 +85,10 @@ object HiltModule {
     @Singleton
     @Provides
     fun provideVideoGameRepository(
-        dataSource: VideoGameRemoteDataSource
+        dataSource: VideoGameRemoteDataSource,
+        favoriteDao: FavoriteVideoGameDao
     ): VideoGameRepository {
-        return VideoGameRepositoryImpl(dataSource)
+        return VideoGameRepositoryImpl(dataSource, favoriteDao)
     }
 
     @Singleton
@@ -136,5 +137,37 @@ object HiltModule {
         repository: VideoGameRepository
     ): SetInitialVideoGamesUseCase {
         return SetInitialVideoGamesUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetFavoriteVideoGamesUseCase(
+        repository: VideoGameRepository
+    ): GetFavoriteVideoGamesUseCase {
+        return GetFavoriteVideoGamesUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideToggleFavoriteUseCase(
+        repository: VideoGameRepository
+    ): ToggleFavoriteUseCase {
+        return ToggleFavoriteUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideIsFavoriteUseCase(
+        repository: VideoGameRepository
+    ): IsFavoriteUseCase {
+        return IsFavoriteUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRemoveFavoriteUseCase(
+        repository: VideoGameRepository
+    ): RemoveFavoriteUseCase {
+        return RemoveFavoriteUseCase(repository)
     }
 }

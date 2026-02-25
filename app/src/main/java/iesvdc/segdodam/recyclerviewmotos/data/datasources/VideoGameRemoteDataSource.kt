@@ -27,7 +27,7 @@ class VideoGameRemoteDataSourceImpl(
         val remote = fetchVideoGamesFromApi()
         cachedVideoGames.clear()
         cachedVideoGames.addAll(remote)
-        return cachedVideoGames
+        return ArrayList(cachedVideoGames)
     }
 
     private suspend fun fetchVideoGamesFromApi(): List<VideoGameEntity> {

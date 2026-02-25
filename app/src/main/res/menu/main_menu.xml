@@ -11,4 +11,9 @@
         android:icon="@android:drawable/ic_menu_gallery"
         android:title="Ranking" />
 
+    <item
+        android:id="@+id/favoritesFragment"
+        android:icon="@android:drawable/btn_star_big_on"
+        android:title="Favoritos" />
+
 </menu>

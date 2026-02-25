@@ -17,7 +17,10 @@ class VideoGamesViewModel @Inject constructor(
     private val addVideoGameUseCase: AddVideoGameUseCase,
     private val updateVideoGameUseCase: UpdateVideoGameUseCase,
     private val deleteVideoGameUseCase: DeleteVideoGameUseCase,
-    private val getVideoGameAtUseCase: GetVideoGameAtUseCase
+    private val getVideoGameAtUseCase: GetVideoGameAtUseCase,
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
+    private val isFavoriteUseCase: IsFavoriteUseCase,
+    private val getFavoriteVideoGamesUseCase: GetFavoriteVideoGamesUseCase
 ) : ViewModel() {
 
     private val _videoGames = MutableLiveData<MutableList<VideoGame>>()
@@ -39,6 +42,7 @@ class VideoGamesViewModel @Inject constructor(
             runCatching { getAllVideoGamesUseCase() }
                 .onSuccess { videoGamesFromUseCase ->
                     val videoGamesList = videoGamesFromUseCase.map { entity ->
+                        val isFav = isFavoriteUseCase(entity.id)
                         VideoGame(
                             id = entity.id,
                             nombre = entity.nombre,
@@ -46,7 +50,8 @@ class VideoGamesViewModel @Inject constructor(
                             plataforma = entity.plataforma,
                             caracteristicas = entity.caracteristicas,
                             puntuacion = entity.puntuacion,
-                            visitas = entity.visitas
+                            visitas = entity.visitas,
+                            isFavorite = isFav
                         )
                     }.toMutableList()
                     _videoGames.value = videoGamesList
@@ -54,6 +59,23 @@ class VideoGamesViewModel @Inject constructor(
                 .onFailure { error ->
                     _errorMessage.value = error.message ?: "No se pudo cargar la lista."
                 }
+        }
+    }
+
+    fun toggleFavorite(pos: Int) {
+        val game = _videoGames.value?.getOrNull(pos) ?: return
+        viewModelScope.launch {
+            val entity = VideoGameEntity(
+                id = game.id,
+                nombre = game.nombre,
+                precio = game.precio,
+                plataforma = game.plataforma,
+                caracteristicas = game.caracteristicas,
+                puntuacion = game.puntuacion,
+                visitas = game.visitas
+            )
+            toggleFavoriteUseCase(entity)
+            loadVideoGames() // Refresh to update UI
         }
     }
 

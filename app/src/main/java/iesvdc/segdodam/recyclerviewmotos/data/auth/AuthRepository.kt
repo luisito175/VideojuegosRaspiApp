@@ -17,6 +17,7 @@ class AuthRepository @Inject constructor(
         if (!response.isSuccessful) throw HttpException(response)
         val body = response.body() ?: throw IllegalStateException("Respuesta vacía")
         sessionManager.saveTokens(body.accessToken, body.refreshToken)
+        sessionManager.saveUserId(body.user.id)
     }
 
     suspend fun refreshAccessToken(): Boolean {

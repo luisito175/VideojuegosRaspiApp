@@ -13,4 +13,10 @@ interface VideoGameRepository {
     suspend fun deleteVideoGame(pos: Int, videoGame: VideoGameEntity): List<VideoGameEntity>
     suspend fun getVideoGameAt(pos: Int): VideoGameEntity?
     suspend fun setInitialVideoGames(list: List<VideoGameEntity>)
+
+    // Favorites
+    fun getFavoriteVideoGames(): kotlinx.coroutines.flow.Flow<List<VideoGameEntity>>
+    suspend fun addFavorite(videoGame: VideoGameEntity)
+    suspend fun removeFavorite(videoGame: VideoGameEntity)
+    suspend fun isFavorite(id: Int): Boolean
 }
