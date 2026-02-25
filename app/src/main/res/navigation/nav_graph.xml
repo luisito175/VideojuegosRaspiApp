@@ -42,4 +42,10 @@
             app:destination="@id/videoGameDetailFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="iesvdc.segdodam.recyclerviewmotos.ui.settings.SettingsFragment"
+        android:label="Ajustes"
+        tools:layout="@layout/fragment_settings" />
+
 </navigation>

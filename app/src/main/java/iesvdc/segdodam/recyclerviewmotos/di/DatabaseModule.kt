@@ -9,6 +9,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import iesvdc.segdodam.recyclerviewmotos.data.local.AppDatabase
 import iesvdc.segdodam.recyclerviewmotos.data.local.dao.FavoriteVideoGameDao
+import iesvdc.segdodam.recyclerviewmotos.data.local.dao.UserProfileDao
 import javax.inject.Singleton
 
 @Module
@@ -22,11 +23,18 @@ object DatabaseModule {
             context,
             AppDatabase::class.java,
             "videojuegos_db"
-        ).build()
+        )
+        .fallbackToDestructiveMigration() // Facilitar actualizaciones de esquema en desarrollo
+        .build()
     }
 
     @Provides
     fun provideFavoriteVideoGameDao(database: AppDatabase): FavoriteVideoGameDao {
         return database.favoriteVideoGameDao()
+    }
+
+    @Provides
+    fun provideUserProfileDao(database: AppDatabase): UserProfileDao {
+        return database.userProfileDao()
     }
 }

@@ -6,17 +6,18 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import iesvdc.segdodam.recyclerviewmotos.data.api.AuthApiService
 import iesvdc.segdodam.recyclerviewmotos.data.api.VideoGameApiService
+import iesvdc.segdodam.recyclerviewmotos.data.api.UserApiService
 import iesvdc.segdodam.recyclerviewmotos.data.auth.AuthAuthenticator
 import iesvdc.segdodam.recyclerviewmotos.data.auth.AuthInterceptor
 import iesvdc.segdodam.recyclerviewmotos.data.auth.SessionManager
 import iesvdc.segdodam.recyclerviewmotos.data.datasources.VideoGameRemoteDataSource
 import iesvdc.segdodam.recyclerviewmotos.data.datasources.VideoGameRemoteDataSourceImpl
 import iesvdc.segdodam.recyclerviewmotos.data.repositories.VideoGameRepositoryImpl
+import iesvdc.segdodam.recyclerviewmotos.data.local.dao.FavoriteVideoGameDao
 import iesvdc.segdodam.recyclerviewmotos.domain.repositories.VideoGameRepository
 import iesvdc.segdodam.recyclerviewmotos.domain.usecases.*
 import com.google.gson.GsonBuilder
 import com.google.gson.Strictness
-import iesvdc.segdodam.recyclerviewmotos.data.local.dao.FavoriteVideoGameDao
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -72,6 +73,12 @@ object HiltModule {
     @Provides
     fun provideVideoGameApiService(retrofit: Retrofit): VideoGameApiService {
         return retrofit.create(VideoGameApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserApiService(retrofit: Retrofit): UserApiService {
+        return retrofit.create(UserApiService::class.java)
     }
 
     @Singleton
