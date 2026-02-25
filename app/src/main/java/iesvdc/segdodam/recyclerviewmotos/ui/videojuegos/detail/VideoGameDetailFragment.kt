@@ -1,4 +1,4 @@
-package iesvdc.segdodam.recyclerviewmotos.ui.motos.detail
+package iesvdc.segdodam.recyclerviewmotos.ui.videojuegos.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import iesvdc.segdodam.recyclerviewmotos.databinding.FragmentVideoGameDetailBinding
 import iesvdc.segdodam.recyclerviewmotos.models.VideoGame
-import iesvdc.segdodam.recyclerviewmotos.ui.motos.VideoGamesViewModel
+import iesvdc.segdodam.recyclerviewmotos.ui.videojuegos.VideoGamesViewModel
 
 @AndroidEntryPoint
 class VideoGameDetailFragment : Fragment() {
@@ -17,6 +17,7 @@ class VideoGameDetailFragment : Fragment() {
     private var _binding: FragmentVideoGameDetailBinding? = null
     private val binding get() = _binding!!
     private var currentPosition: Int = -1
+    private var visitasIncrementadas = false
 
     // Obtiene la MISMA instancia del ViewModel que el fragmento de la lista
     private val viewModel: VideoGamesViewModel by activityViewModels()
@@ -40,7 +41,18 @@ class VideoGameDetailFragment : Fragment() {
             // Pide el videojuego al ViewModel en lugar de tener su propia lista
             val videoGame = viewModel.getVideoGameAt(currentPosition)
             if (videoGame != null) {
-                bind(videoGame)
+                val updated = if (!visitasIncrementadas) {
+                    visitasIncrementadas = true
+                    videoGame.copy(visitas = videoGame.visitas + 1)
+                } else {
+                    videoGame
+                }
+
+                if (updated.visitas != videoGame.visitas) {
+                    viewModel.updateVideoGame(currentPosition, updated)
+                }
+
+                bind(updated)
             }
         }
     }

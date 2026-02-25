@@ -19,6 +19,7 @@
     <color name="md_theme_onBackground">#111111</color> <!-- Negro puro sobre fondo claro -->
     <color name="md_theme_surface">#FFFFFF</color>
     <color name="md_theme_onSurface">#111111</color>
+    <color name="md_theme_onSurfaceVariant">#5E5E5E</color>
     <!-- Colores existentes -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>

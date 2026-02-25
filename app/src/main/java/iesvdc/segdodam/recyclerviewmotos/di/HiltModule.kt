@@ -4,12 +4,19 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import iesvdc.segdodam.recyclerviewmotos.data.api.AuthApiService
 import iesvdc.segdodam.recyclerviewmotos.data.api.VideoGameApiService
+import iesvdc.segdodam.recyclerviewmotos.data.auth.AuthAuthenticator
+import iesvdc.segdodam.recyclerviewmotos.data.auth.AuthInterceptor
+import iesvdc.segdodam.recyclerviewmotos.data.auth.SessionManager
 import iesvdc.segdodam.recyclerviewmotos.data.datasources.VideoGameRemoteDataSource
 import iesvdc.segdodam.recyclerviewmotos.data.datasources.VideoGameRemoteDataSourceImpl
 import iesvdc.segdodam.recyclerviewmotos.data.repositories.VideoGameRepositoryImpl
 import iesvdc.segdodam.recyclerviewmotos.domain.repositories.VideoGameRepository
 import iesvdc.segdodam.recyclerviewmotos.domain.usecases.*
+import com.google.gson.GsonBuilder
+import com.google.gson.Strictness
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -23,12 +30,40 @@ object HiltModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(): Retrofit {
+    fun provideAuthApiService(): AuthApiService {
+        val gson = GsonBuilder()
+            .setStrictness(Strictness.LENIENT)
+            .create()
         return Retrofit.Builder()
-            // Use the ngrok HTTPS root provided by the user.
-            // Keep the trailing slash so endpoint paths are appended correctly.
+            // Base URL from ngrok tunnel.
             .baseUrl("https://untrigonometric-postmaximal-candice.ngrok-free.dev/")
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+            .create(AuthApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideOkHttpClient(
+        sessionManager: SessionManager,
+        authApiService: AuthApiService
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(AuthInterceptor(sessionManager))
+            .authenticator(AuthAuthenticator(sessionManager, authApiService))
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(client: OkHttpClient): Retrofit {
+        val gson = GsonBuilder()
+            .setStrictness(Strictness.LENIENT)
+            .create()
+        return Retrofit.Builder()
+            .baseUrl("https://untrigonometric-postmaximal-candice.ngrok-free.dev/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(client)
             .build()
     }
 
@@ -37,6 +72,7 @@ object HiltModule {
     fun provideVideoGameApiService(retrofit: Retrofit): VideoGameApiService {
         return retrofit.create(VideoGameApiService::class.java)
     }
+
 
     @Singleton
     @Provides

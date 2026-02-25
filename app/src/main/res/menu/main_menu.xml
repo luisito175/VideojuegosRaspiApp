@@ -9,6 +9,6 @@
     <item
         android:id="@+id/galleryFragment"
         android:icon="@android:drawable/ic_menu_gallery"
-        android:title="Galería" />
+        android:title="Ranking" />
 
 </menu>

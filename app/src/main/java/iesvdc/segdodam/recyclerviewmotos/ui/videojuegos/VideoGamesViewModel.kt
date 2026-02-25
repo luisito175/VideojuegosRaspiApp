@@ -1,4 +1,4 @@
-package iesvdc.segdodam.recyclerviewmotos.ui.motos
+package iesvdc.segdodam.recyclerviewmotos.ui.videojuegos
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

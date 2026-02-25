@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/videoGamesListFragment"
-        android:name="iesvdc.segdodam.recyclerviewmotos.ui.motos.VideoGamesListFragment"
+        android:name="iesvdc.segdodam.recyclerviewmotos.ui.videojuegos.VideoGamesListFragment"
         android:label="Listado de Videojuegos"
         tools:layout="@layout/fragment_video_games_list">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/videoGameDetailFragment"
-        android:name="iesvdc.segdodam.recyclerviewmotos.ui.motos.detail.VideoGameDetailFragment"
+        android:name="iesvdc.segdodam.recyclerviewmotos.ui.videojuegos.detail.VideoGameDetailFragment"
         android:label="Detalles del Videojuego"
         tools:layout="@layout/fragment_video_game_detail">
         <argument
@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/galleryFragment"
         android:name="iesvdc.segdodam.recyclerviewmotos.ui.gallery.GalleryFragment"
-        android:label="Galería"
+        android:label="Ranking"
         tools:layout="@layout/fragment_gallery" />
 
 </navigation>

@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import iesvdc.segdodam.recyclerviewmotos.databinding.FragmentRankingBinding
 import iesvdc.segdodam.recyclerviewmotos.models.VideoGame
-import iesvdc.segdodam.recyclerviewmotos.ui.motos.VideoGamesViewModel
+import iesvdc.segdodam.recyclerviewmotos.ui.videojuegos.VideoGamesViewModel
 
 class RankingFragment : Fragment() {
 
@@ -21,7 +21,7 @@ class RankingFragment : Fragment() {
 
     private val rankingOptions = listOf(
         "Mejor valorado",
-        "Más descargado"
+        "Más popular"
     )
 
     override fun onCreateView(

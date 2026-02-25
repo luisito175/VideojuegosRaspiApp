@@ -1,10 +1,9 @@
-package iesvdc.segdodam.recyclerviewmotos.ui.motos
+package iesvdc.segdodam.recyclerviewmotos.ui.videojuegos
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -14,6 +13,10 @@ import iesvdc.segdodam.recyclerviewmotos.Adapter.VideoGameAdapter
 import iesvdc.segdodam.recyclerviewmotos.Dialogs.VideoGameDialogFragment
 import iesvdc.segdodam.recyclerviewmotos.R
 import iesvdc.segdodam.recyclerviewmotos.databinding.FragmentVideoGamesListBinding
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import androidx.lifecycle.lifecycleScope
 
 @AndroidEntryPoint
 class VideoGamesListFragment : Fragment() {
@@ -24,6 +27,7 @@ class VideoGamesListFragment : Fragment() {
     // Obtiene una instancia compartida del ViewModel.
     private val viewModel: VideoGamesViewModel by activityViewModels()
     private lateinit var adapter: VideoGameAdapter
+    private var refreshJob: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +43,6 @@ class VideoGamesListFragment : Fragment() {
 
         setupRecyclerView()
         setupFab()
-        setupRefreshButton()
         observeViewModel()
     }
 
@@ -47,10 +50,15 @@ class VideoGamesListFragment : Fragment() {
         super.onStart()
         // Refresca la lista cada vez que el fragmento entra en pantalla.
         viewModel.refresh()
+        startAutoRefresh()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        stopAutoRefresh()
     }
 
     private fun setupRecyclerView() {
-        // El adaptador ahora recibe una función para el clic en el item
         adapter = VideoGameAdapter(
             mutableListOf(),
             ::deleteVideoGame,
@@ -67,30 +75,33 @@ class VideoGamesListFragment : Fragment() {
         }
     }
 
-    private fun setupRefreshButton() {
-        binding.btnRefresh.setOnClickListener {
-            viewModel.refresh()
-        }
-    }
-
     private fun observeViewModel() {
         // Observa el LiveData del ViewModel. Cada vez que la lista de videojuegos cambie,
         // este bloque se ejecutará y actualizará la interfaz.
         viewModel.videoGames.observe(viewLifecycleOwner) {
             adapter.updateData(it)
         }
+    }
 
-        viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
-            if (!message.isNullOrBlank()) {
-                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    private fun startAutoRefresh() {
+        if (refreshJob?.isActive == true) return
+        refreshJob = viewLifecycleOwner.lifecycleScope.launch {
+            while (true) {
+                viewModel.refresh()
+                delay(5000)
             }
         }
+    }
+
+    private fun stopAutoRefresh() {
+        refreshJob?.cancel()
+        refreshJob = null
     }
 
     private fun showAddVideoGameDialog() {
         val dialog = VideoGameDialogFragment(null) { nuevoVideoGame ->
             viewModel.addVideoGame(nuevoVideoGame)
-            Toast.makeText(context, "Videojuego añadido correctamente", Toast.LENGTH_SHORT).show()
+            viewModel.refresh()
         }
         dialog.show(parentFragmentManager, "ADD_VIDEO_GAME")
     }
@@ -100,7 +111,7 @@ class VideoGamesListFragment : Fragment() {
         if (videoGame != null) {
             val dialog = VideoGameDialogFragment(videoGame) { videoGameActualizado ->
                 viewModel.updateVideoGame(pos, videoGameActualizado)
-                Toast.makeText(context, "Videojuego actualizado", Toast.LENGTH_SHORT).show()
+                viewModel.refresh()
             }
             dialog.show(parentFragmentManager, "EDIT_VIDEO_GAME")
         }
@@ -110,7 +121,7 @@ class VideoGamesListFragment : Fragment() {
         val videoGame = viewModel.getVideoGameAt(pos)
         if (videoGame != null) {
             viewModel.deleteVideoGame(pos)
-            Toast.makeText(context, "Videojuego '${videoGame.nombre}' eliminado", Toast.LENGTH_SHORT).show()
+            viewModel.refresh()
         }
     }
 
