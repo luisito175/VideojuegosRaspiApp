@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -20,6 +21,7 @@ import androidx.core.view.GravityCompat
 import iesvdc.segdodam.recyclerviewmotos.databinding.ActivityMainBinding
 import iesvdc.segdodam.recyclerviewmotos.databinding.NavHeaderBinding
 import iesvdc.segdodam.recyclerviewmotos.ui.UserViewModel
+import iesvdc.segdodam.recyclerviewmotos.ui.videojuegos.VideoGamesViewModel
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -27,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private val userViewModel: UserViewModel by viewModels()
+    private val videoGamesViewModel: VideoGamesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -122,6 +125,20 @@ class MainActivity : AppCompatActivity() {
     // Infla el menú de opciones de la Toolbar (los 3 puntos)
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.options_menu, menu)
+        val searchItem = menu.findItem(R.id.action_search)
+        val searchView = searchItem.actionView as? SearchView
+        searchView?.queryHint = "Buscar por nombre"
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                videoGamesViewModel.setSearchQuery(query.orEmpty())
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                videoGamesViewModel.setSearchQuery(newText.orEmpty())
+                return true
+            }
+        })
         return true
     }
 

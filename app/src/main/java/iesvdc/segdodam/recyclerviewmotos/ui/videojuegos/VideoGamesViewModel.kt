@@ -26,6 +26,9 @@ class VideoGamesViewModel @Inject constructor(
     private val _videoGames = MutableLiveData<MutableList<VideoGame>>()
     val videoGames: LiveData<MutableList<VideoGame>> = _videoGames
 
+    private val allVideoGames = mutableListOf<VideoGame>()
+    private var currentQuery: String = ""
+
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
 
@@ -54,7 +57,9 @@ class VideoGamesViewModel @Inject constructor(
                             isFavorite = isFav
                         )
                     }.toMutableList()
-                    _videoGames.value = videoGamesList
+                    allVideoGames.clear()
+                    allVideoGames.addAll(videoGamesList)
+                    applyFilter(currentQuery)
                 }
                 .onFailure { error ->
                     _errorMessage.value = error.message ?: "No se pudo cargar la lista."
@@ -176,5 +181,19 @@ class VideoGamesViewModel @Inject constructor(
 
     fun getVideoGameAt(pos: Int): VideoGame? {
         return _videoGames.value?.getOrNull(pos)
+    }
+
+    fun setSearchQuery(query: String) {
+        currentQuery = query
+        applyFilter(query)
+    }
+
+    private fun applyFilter(query: String) {
+        if (query.isBlank()) {
+            _videoGames.value = allVideoGames.toMutableList()
+            return
+        }
+        val filtered = allVideoGames.filter { it.nombre.contains(query, ignoreCase = true) }
+        _videoGames.value = filtered.toMutableList()
     }
 }
