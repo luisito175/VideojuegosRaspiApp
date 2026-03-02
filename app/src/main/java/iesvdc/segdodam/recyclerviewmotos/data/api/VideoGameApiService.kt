@@ -12,29 +12,29 @@ import retrofit2.http.Path
 
 interface VideoGameApiService {
     // Primary endpoint (no trailing slash)
-    @GET("videogame")
+    @GET("/api/videogame")
     suspend fun getVideoGamesResponse(): Response<List<VideoGameEntity>>
 
     // Fallback endpoint (some servers expect a trailing slash)
-    @GET("videogame/")
+    @GET("/api/videogame/")
     suspend fun getVideoGamesResponseWithSlash(): Response<List<VideoGameEntity>>
 
-    @POST("videogame")
+    @POST("/api/videogame")
     suspend fun addVideoGame(@Body request: VideoGameCreateRequest): Response<Unit>
 
-    @PUT("videogame/{id}")
+    @PUT("/api/videogame/{id}")
     suspend fun updateVideoGame(
         @Path("id") id: Int,
         @Body request: VideoGameUpdateRequest
     ): Response<VideoGameEntity>
 
-    @PATCH("videogame/{id}")
+    @PATCH("/api/videogame/{id}")
     suspend fun patchVideoGame(
         @Path("id") id: Int,
         @Body request: VideoGameUpdateRequest
     ): Response<VideoGameEntity>
 
-    @DELETE("videogame/{id}")
+    @DELETE("/api/videogame/{id}")
     suspend fun deleteVideoGame(@Path("id") id: Int): Response<Unit>
 }
 
