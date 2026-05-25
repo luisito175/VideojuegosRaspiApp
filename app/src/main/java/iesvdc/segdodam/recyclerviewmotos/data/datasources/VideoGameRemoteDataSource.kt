@@ -15,6 +15,7 @@ interface VideoGameRemoteDataSource {
     suspend fun updateVideoGame(videoGame: VideoGameEntity): List<VideoGameEntity>
     suspend fun deleteVideoGame(videoGame: VideoGameEntity): List<VideoGameEntity>
     suspend fun getVideoGameAt(pos: Int): VideoGameEntity?
+    suspend fun registerVisit(id: Int)
 }
 
 class VideoGameRemoteDataSourceImpl(
@@ -82,5 +83,16 @@ class VideoGameRemoteDataSourceImpl(
             fetchVideoGames()
         }
         return cachedVideoGames.getOrNull(pos)
+    }
+
+    override suspend fun registerVisit(id: Int) {
+        val response = apiService.incrementVisit(id)
+        if (response.isSuccessful) return
+
+        // Compatibilidad con despliegues que exponen esta ruta bajo /api.
+        val fallback = apiService.incrementVisitApi(id)
+        if (!fallback.isSuccessful) {
+            throw HttpException(fallback)
+        }
     }
 }

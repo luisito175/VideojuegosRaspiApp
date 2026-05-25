@@ -47,3 +47,11 @@ class GetVideoGameAtUseCase(private val repository: VideoGameRepository) {
 class SetInitialVideoGamesUseCase(private val repository: VideoGameRepository) {
     suspend operator fun invoke(list: List<VideoGameEntity>) = repository.setInitialVideoGames(list)
 }
+
+/**
+ * Caso de uso para registrar una visita al abrir el detalle.
+ */
+class RegisterVisitUseCase(private val repository: VideoGameRepository) {
+    suspend operator fun invoke(id: Int) = repository.registerVisit(id)
+}
+

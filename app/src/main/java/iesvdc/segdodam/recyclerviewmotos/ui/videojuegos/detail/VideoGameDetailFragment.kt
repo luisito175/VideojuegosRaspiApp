@@ -44,8 +44,7 @@ class VideoGameDetailFragment : Fragment() {
                     // Solo incrementamos visitas la primera vez que entramos y tenemos el dato
                     if (!visitsIncremented) {
                         visitsIncremented = true
-                        val updated = game.copy(visitas = game.visitas + 1)
-                        viewModel.updateVideoGame(currentPosition, updated)
+                        viewModel.incrementVisitOptimistic(game.id)
                     }
                 }
             }

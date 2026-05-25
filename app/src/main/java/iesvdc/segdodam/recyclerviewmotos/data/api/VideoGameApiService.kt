@@ -27,6 +27,12 @@ interface VideoGameApiService {
 
     @DELETE("/api/videogame/{id}")
     suspend fun deleteVideoGame(@Path("id") id: Int): Response<Unit>
+
+    @POST("/videogame/{id}/visit")
+    suspend fun incrementVisit(@Path("id") id: Int): Response<Unit>
+
+    @POST("/api/videogame/{id}/visit")
+    suspend fun incrementVisitApi(@Path("id") id: Int): Response<Unit>
 }
 
 data class VideoGameCreateRequest(

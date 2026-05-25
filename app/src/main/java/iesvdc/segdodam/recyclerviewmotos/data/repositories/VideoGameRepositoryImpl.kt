@@ -37,6 +37,10 @@ class VideoGameRepositoryImpl(
         // No-op: los datos vienen de la API.
     }
 
+    override suspend fun registerVisit(id: Int) {
+        remoteDataSource.registerVisit(id)
+    }
+
     override fun getFavoriteVideoGames(): Flow<List<VideoGameEntity>> {
         return favoriteDao.getAllFavorites().map { favorites ->
             favorites.map { fav ->

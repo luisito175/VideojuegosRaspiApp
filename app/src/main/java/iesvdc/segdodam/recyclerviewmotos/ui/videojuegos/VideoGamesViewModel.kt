@@ -17,6 +17,7 @@ class VideoGamesViewModel @Inject constructor(
     private val addVideoGameUseCase: AddVideoGameUseCase,
     private val updateVideoGameUseCase: UpdateVideoGameUseCase,
     private val deleteVideoGameUseCase: DeleteVideoGameUseCase,
+    private val registerVisitUseCase: RegisterVisitUseCase,
     private val isFavoriteUseCase: IsFavoriteUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase
 ) : ViewModel() {
@@ -145,6 +146,19 @@ class VideoGamesViewModel @Inject constructor(
                 .onFailure { error ->
                     _errorMessage.value = parseBackendError(error)
                 }
+        }
+    }
+
+    fun incrementVisitOptimistic(id: Int) {
+        // UI optimista: subimos contador local al instante.
+        allVideoGames.replaceAll { game ->
+            if (game.id == id) game.copy(visitas = game.visitas + 1) else game
+        }
+        applyFilter(currentQuery)
+
+        viewModelScope.launch {
+            runCatching { registerVisitUseCase(id) }
+            // Error silencioso por UX: mantenemos la visita optimista en pantalla.
         }
     }
 

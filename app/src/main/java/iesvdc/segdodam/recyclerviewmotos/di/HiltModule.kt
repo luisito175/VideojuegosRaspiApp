@@ -148,6 +148,14 @@ object HiltModule {
 
     @Singleton
     @Provides
+    fun provideRegisterVisitUseCase(
+        repository: VideoGameRepository
+    ): RegisterVisitUseCase {
+        return RegisterVisitUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
     fun provideGetFavoriteVideoGamesUseCase(
         repository: VideoGameRepository
     ): GetFavoriteVideoGamesUseCase {
