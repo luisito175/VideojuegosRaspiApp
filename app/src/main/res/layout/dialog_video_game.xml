@@ -2,12 +2,13 @@
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="8dp"
+    app:strokeColor="@color/surface_outline_soft"
+    app:strokeWidth="1dp"
     app:cardBackgroundColor="?attr/colorSurface">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +23,9 @@
             style="@style/Widget.App.TextView.Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Añadir / Editar Videojuego"
+            android:text="@string/anadir_editar_videojuego"
+            android:textColor="@color/md_theme_primary"
+            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -32,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="Nombre"
+            android:hint="@string/nombre"
             app:layout_constraintTop_toBottomOf="@id/tvTitulo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -51,7 +54,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Precio"
+            android:hint="@string/precio"
             app:layout_constraintTop_toBottomOf="@id/tilNombre"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -71,7 +74,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Plataforma"
+            android:hint="@string/plataforma"
             app:layout_constraintTop_toBottomOf="@id/tilPrecio"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -90,7 +93,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Características"
+            android:hint="@string/caracteristicas"
             app:layout_constraintTop_toBottomOf="@id/tilPlataforma"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -109,7 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="Valoración"
+            android:text="@string/valoracion"
             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
             android:textColor="?attr/colorOnSurface"
             app:layout_constraintTop_toBottomOf="@id/tilCaracteristicas"
@@ -125,24 +128,32 @@
             app:layout_constraintTop_toBottomOf="@id/tvPuntuacionLabel"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAceptar"
             style="@style/Widget.App.Button.Primary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Aceptar"
+            android:text="@string/aceptar"
+            app:cornerRadius="16dp"
+            app:icon="@android:drawable/ic_menu_save"
+            app:iconTint="@color/md_theme_onPrimary"
+            app:iconGravity="textStart"
             app:layout_constraintTop_toBottomOf="@id/ratingBarDialog"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancelar"
             style="@style/Widget.App.Button.Secondary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Cancelar"
+            android:text="@string/cancelar"
+            app:cornerRadius="16dp"
+            app:icon="@android:drawable/ic_menu_close_clear_cancel"
+            app:iconTint="@color/md_theme_error"
+            app:iconGravity="textStart"
             app:layout_constraintTop_toBottomOf="@id/btnAceptar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

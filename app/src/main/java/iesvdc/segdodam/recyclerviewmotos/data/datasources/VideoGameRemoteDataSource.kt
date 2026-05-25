@@ -7,7 +7,7 @@ import iesvdc.segdodam.recyclerviewmotos.domain.models.VideoGameEntity
 import retrofit2.HttpException
 
 /**
- * Data source remoto que consume la API con Retrofit (JSON Server).
+ * Data source remoto que consume la API con Retrofit.
  */
 interface VideoGameRemoteDataSource {
     suspend fun fetchVideoGames(): List<VideoGameEntity>
@@ -24,28 +24,14 @@ class VideoGameRemoteDataSourceImpl(
     private val cachedVideoGames = mutableListOf<VideoGameEntity>()
 
     override suspend fun fetchVideoGames(): List<VideoGameEntity> {
-        val remote = fetchVideoGamesFromApi()
-        cachedVideoGames.clear()
-        cachedVideoGames.addAll(remote)
-        return ArrayList(cachedVideoGames)
-    }
-
-    private suspend fun fetchVideoGamesFromApi(): List<VideoGameEntity> {
-        val primary = apiService.getVideoGamesResponse()
-        if (primary.isSuccessful) {
-            return primary.body().orEmpty()
+        val response = apiService.getVideoGamesResponse()
+        if (response.isSuccessful) {
+            val remote = response.body().orEmpty()
+            cachedVideoGames.clear()
+            cachedVideoGames.addAll(remote)
+            return ArrayList(cachedVideoGames)
         }
-
-        // If the server expects a trailing slash, retry once with it
-        if (primary.code() == 404) {
-            val fallback = apiService.getVideoGamesResponseWithSlash()
-            if (fallback.isSuccessful) {
-                return fallback.body().orEmpty()
-            }
-            throw HttpException(fallback)
-        }
-
-        throw HttpException(primary)
+        throw HttpException(response)
     }
 
     override suspend fun addVideoGame(videoGame: VideoGameEntity): List<VideoGameEntity> {
@@ -67,6 +53,7 @@ class VideoGameRemoteDataSourceImpl(
 
     override suspend fun updateVideoGame(videoGame: VideoGameEntity): List<VideoGameEntity> {
         val request = VideoGameUpdateRequest(
+            id = videoGame.id,
             nombre = videoGame.nombre,
             precio = videoGame.precio,
             plataforma = videoGame.plataforma,
@@ -74,16 +61,10 @@ class VideoGameRemoteDataSourceImpl(
             puntuacion = videoGame.puntuacion,
             visitas = videoGame.visitas
         )
-        val response = apiService.updateVideoGame(videoGame.id, request)
+        // Usamos PATCH como método principal de actualización
+        val response = apiService.patchVideoGame(videoGame.id, request)
         if (!response.isSuccessful) {
-            if (response.code() == 404 || response.code() == 405) {
-                val patchResponse = apiService.patchVideoGame(videoGame.id, request)
-                if (!patchResponse.isSuccessful) {
-                    throw HttpException(patchResponse)
-                }
-            } else {
-                throw HttpException(response)
-            }
+            throw HttpException(response)
         }
         return fetchVideoGames()
     }

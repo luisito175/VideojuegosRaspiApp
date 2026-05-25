@@ -4,43 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
+    android:background="@drawable/bg_screen_gradient"
+    android:fillViewport="true"
+    android:padding="12dp"
     tools:context=".ui.videojuegos.detail.VideoGameDetailFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="20dp"
+        android:padding="20dp"
+        android:background="@drawable/bg_surface_card">
 
         <TextView
             android:id="@+id/tv_detail_nombre"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-            android:textColor="?attr/colorOnSurface"
+            android:textAppearance="@style/TextAppearance.Material3.DisplaySmall"
+            android:textColor="@color/md_theme_primary"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Nombre del videojuego" />
 
         <TextView
             android:id="@+id/tv_detail_plataforma"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:drawableStart="@android:drawable/ic_menu_manage"
+            app:tint="?attr/colorOnSurfaceVariant"
+            android:drawablePadding="6dp"
             android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
             android:textColor="?attr/colorOnSurfaceVariant"
+            android:contentDescription="@string/plataforma"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_nombre"
             tools:text="Plataforma" />
 
         <TextView
             android:id="@+id/tv_detail_precio"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:drawableStart="@android:drawable/ic_menu_info_details"
+            app:tint="?attr/colorOnSurfaceVariant"
+            android:drawablePadding="6dp"
             android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
             android:textColor="?attr/colorOnSurface"
+            android:contentDescription="@string/precio"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_plataforma"
             tools:text="59.99 €" />
 
@@ -49,9 +66,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Características:"
+            android:text="@string/caracteristicas"
             android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
-            android:textColor="?attr/colorOnSurface"
+            android:textColor="@color/md_theme_secondary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_precio" />
 
@@ -62,29 +79,53 @@
             android:layout_marginTop="4dp"
             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
             android:textColor="?attr/colorOnSurfaceVariant"
+            android:background="@drawable/bg_chip"
+            android:padding="10dp"
+            android:contentDescription="@string/caracteristicas"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_caracteristicas_label"
             tools:text="Aquí van las características detalladas del videojuego, que puede ser un texto largo y ocupar varias líneas." />
 
+        <TextView
+            android:id="@+id/tv_detail_puntuacion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:drawableStart="@android:drawable/btn_star_big_on"
+            app:tint="@color/md_theme_tertiary"
+            android:drawablePadding="6dp"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:contentDescription="@string/puntuacion"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_caracteristicas"
+            tools:text="Puntuación: 4/5" />
+
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="4dp"
             android:numStars="5"
             android:stepSize="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_detail_caracteristicas" />
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_puntuacion" />
 
         <TextView
             android:id="@+id/tv_detail_visitas"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:drawableStart="@android:drawable/ic_menu_view"
+            app:tint="@color/md_theme_secondary"
+            android:drawablePadding="6dp"
             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
             android:textColor="?attr/colorOnSurface"
+            android:contentDescription="@string/visitas"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ratingBar"
             tools:text="Visitas: 0" />
 

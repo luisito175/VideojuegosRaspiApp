@@ -20,6 +20,7 @@
     <color name="md_theme_surface">#1E1E1E</color>
     <color name="md_theme_onSurface">#E6E1E5</color>
     <color name="md_theme_onSurfaceVariant">#CAC4D0</color>
+    <color name="surface_outline_soft">#2F3A48</color>
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>

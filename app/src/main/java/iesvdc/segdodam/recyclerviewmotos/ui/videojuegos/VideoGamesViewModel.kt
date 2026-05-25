@@ -17,10 +17,8 @@ class VideoGamesViewModel @Inject constructor(
     private val addVideoGameUseCase: AddVideoGameUseCase,
     private val updateVideoGameUseCase: UpdateVideoGameUseCase,
     private val deleteVideoGameUseCase: DeleteVideoGameUseCase,
-    private val getVideoGameAtUseCase: GetVideoGameAtUseCase,
-    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
     private val isFavoriteUseCase: IsFavoriteUseCase,
-    private val getFavoriteVideoGamesUseCase: GetFavoriteVideoGamesUseCase
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase
 ) : ViewModel() {
 
     private val _videoGames = MutableLiveData<MutableList<VideoGame>>()
@@ -43,26 +41,50 @@ class VideoGamesViewModel @Inject constructor(
     private fun loadVideoGames() {
         viewModelScope.launch {
             runCatching { getAllVideoGamesUseCase() }
-                .onSuccess { videoGamesFromUseCase ->
-                    val videoGamesList = videoGamesFromUseCase.map { entity ->
-                        val isFav = isFavoriteUseCase(entity.id)
-                        VideoGame(
-                            id = entity.id,
-                            nombre = entity.nombre,
-                            precio = entity.precio,
-                            plataforma = entity.plataforma,
-                            caracteristicas = entity.caracteristicas,
-                            puntuacion = entity.puntuacion,
-                            visitas = entity.visitas,
-                            isFavorite = isFav
-                        )
-                    }.toMutableList()
-                    allVideoGames.clear()
-                    allVideoGames.addAll(videoGamesList)
-                    applyFilter(currentQuery)
+                .onSuccess { entities ->
+                    updateListWithFavorites(entities)
                 }
                 .onFailure { error ->
-                    _errorMessage.value = error.message ?: "No se pudo cargar la lista."
+                    _errorMessage.value = error.message ?: "Error al cargar datos"
+                }
+        }
+    }
+
+    private suspend fun updateListWithFavorites(entities: List<VideoGameEntity>) {
+        val videoGamesList = entities.map { entity ->
+            VideoGame(
+                id = entity.id,
+                nombre = entity.nombre,
+                precio = entity.precio,
+                plataforma = entity.plataforma,
+                caracteristicas = entity.caracteristicas,
+                puntuacion = entity.puntuacion,
+                visitas = entity.visitas,
+                isFavorite = isFavoriteUseCase(entity.id)
+            )
+        }.toMutableList()
+        allVideoGames.clear()
+        allVideoGames.addAll(videoGamesList)
+        applyFilter(currentQuery)
+    }
+
+    fun updateVideoGame(pos: Int, videoGame: VideoGame) {
+        viewModelScope.launch {
+            val entity = VideoGameEntity(
+                id = videoGame.id,
+                nombre = videoGame.nombre,
+                precio = videoGame.precio,
+                plataforma = videoGame.plataforma,
+                caracteristicas = videoGame.caracteristicas,
+                puntuacion = videoGame.puntuacion,
+                visitas = videoGame.visitas
+            )
+            runCatching { updateVideoGameUseCase(pos, entity) }
+                .onSuccess { entities ->
+                    updateListWithFavorites(entities)
+                }
+                .onFailure { error ->
+                    _errorMessage.value = "Error al actualizar: ${error.message}"
                 }
         }
     }
@@ -80,108 +102,63 @@ class VideoGamesViewModel @Inject constructor(
                 visitas = game.visitas
             )
             toggleFavoriteUseCase(entity)
-            loadVideoGames() // Refresh to update UI
+            loadVideoGames()
         }
     }
 
-    fun addVideoGame(nuevoVideoGame: VideoGame) {
+    fun addVideoGame(videoGame: VideoGame) {
         viewModelScope.launch {
-            val nextId = (_videoGames.value?.maxOfOrNull { it.id } ?: 0) + 1
             val entity = VideoGameEntity(
-                id = nextId,
-                nombre = nuevoVideoGame.nombre,
-                precio = nuevoVideoGame.precio,
-                plataforma = nuevoVideoGame.plataforma,
-                caracteristicas = nuevoVideoGame.caracteristicas,
-                puntuacion = nuevoVideoGame.puntuacion,
-                visitas = nuevoVideoGame.visitas
+                id = videoGame.id,
+                nombre = videoGame.nombre,
+                precio = videoGame.precio,
+                plataforma = videoGame.plataforma,
+                caracteristicas = videoGame.caracteristicas,
+                puntuacion = videoGame.puntuacion,
+                visitas = videoGame.visitas
             )
             runCatching { addVideoGameUseCase(entity) }
-                .onSuccess { updatedList ->
-                    _videoGames.value = updatedList.map { mapped ->
-                        VideoGame(
-                            id = mapped.id,
-                            nombre = mapped.nombre,
-                            precio = mapped.precio,
-                            plataforma = mapped.plataforma,
-                            caracteristicas = mapped.caracteristicas,
-                            puntuacion = mapped.puntuacion,
-                            visitas = mapped.visitas
-                        )
-                    }.toMutableList()
+                .onSuccess { entities ->
+                    updateListWithFavorites(entities)
                 }
                 .onFailure { error ->
-                    _errorMessage.value = error.message ?: "No se pudo añadir el videojuego."
+                    _errorMessage.value = parseBackendError(error)
                 }
         }
     }
 
-    fun deleteVideoGame(pos: Int) {
-        val current = _videoGames.value?.getOrNull(pos) ?: return
+    fun deleteVideoGame(pos: Int, videoGame: VideoGame) {
         viewModelScope.launch {
             val entity = VideoGameEntity(
-                id = current.id,
-                nombre = current.nombre,
-                precio = current.precio,
-                plataforma = current.plataforma,
-                caracteristicas = current.caracteristicas,
-                puntuacion = current.puntuacion,
-                visitas = current.visitas
+                id = videoGame.id,
+                nombre = videoGame.nombre,
+                precio = videoGame.precio,
+                plataforma = videoGame.plataforma,
+                caracteristicas = videoGame.caracteristicas,
+                puntuacion = videoGame.puntuacion,
+                visitas = videoGame.visitas
             )
             runCatching { deleteVideoGameUseCase(pos, entity) }
-                .onSuccess { updatedList ->
-                    _videoGames.value = updatedList.map { mapped ->
-                        VideoGame(
-                            id = mapped.id,
-                            nombre = mapped.nombre,
-                            precio = mapped.precio,
-                            plataforma = mapped.plataforma,
-                            caracteristicas = mapped.caracteristicas,
-                            puntuacion = mapped.puntuacion,
-                            visitas = mapped.visitas
-                        )
-                    }.toMutableList()
+                .onSuccess { entities ->
+                    updateListWithFavorites(entities)
                 }
                 .onFailure { error ->
-                    _errorMessage.value = error.message ?: "No se pudo eliminar el videojuego."
+                    _errorMessage.value = parseBackendError(error)
                 }
         }
     }
 
-    fun updateVideoGame(pos: Int, videoGameActualizado: VideoGame) {
-        viewModelScope.launch {
-            val entity = VideoGameEntity(
-                id = videoGameActualizado.id,
-                nombre = videoGameActualizado.nombre,
-                precio = videoGameActualizado.precio,
-                plataforma = videoGameActualizado.plataforma,
-                caracteristicas = videoGameActualizado.caracteristicas,
-                puntuacion = videoGameActualizado.puntuacion,
-                visitas = videoGameActualizado.visitas
-            )
-            runCatching { updateVideoGameUseCase(pos, entity) }
-                .onSuccess { updatedList ->
-                    _videoGames.value = updatedList.map { mapped ->
-                        VideoGame(
-                            id = mapped.id,
-                            nombre = mapped.nombre,
-                            precio = mapped.precio,
-                            plataforma = mapped.plataforma,
-                            caracteristicas = mapped.caracteristicas,
-                            puntuacion = mapped.puntuacion,
-                            visitas = mapped.visitas
-                        )
-                    }.toMutableList()
-                }
-                .onFailure { error ->
-                    _errorMessage.value = error.message ?: "No se pudo actualizar el videojuego."
-                }
+    private fun parseBackendError(error: Throwable): String {
+        val msg = error.message ?: "Error desconocido"
+        return when {
+            msg.contains("403") && msg.contains("crear videojuegos") -> "No tienes permisos para crear videojuegos"
+            msg.contains("403") && msg.contains("editar videojuegos") -> "No tienes permisos para editar videojuegos"
+            msg.contains("403") && msg.contains("eliminar videojuegos") -> "No tienes permisos para eliminar videojuegos"
+            else -> msg
         }
     }
 
-    fun getVideoGameAt(pos: Int): VideoGame? {
-        return _videoGames.value?.getOrNull(pos)
-    }
+    fun getVideoGameAt(pos: Int): VideoGame? = _videoGames.value?.getOrNull(pos)
 
     fun setSearchQuery(query: String) {
         currentQuery = query
@@ -189,11 +166,11 @@ class VideoGamesViewModel @Inject constructor(
     }
 
     private fun applyFilter(query: String) {
-        if (query.isBlank()) {
-            _videoGames.value = allVideoGames.toMutableList()
-            return
+        val filtered = if (query.isBlank()) {
+            allVideoGames
+        } else {
+            allVideoGames.filter { it.nombre.contains(query, ignoreCase = true) }
         }
-        val filtered = allVideoGames.filter { it.nombre.contains(query, ignoreCase = true) }
         _videoGames.value = filtered.toMutableList()
     }
 }

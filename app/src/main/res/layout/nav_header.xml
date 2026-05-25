@@ -2,38 +2,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="176dp"
     android:background="@drawable/banner"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="20dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
 
     >
 
     <ImageView
         android:id="@+id/iv_header_image"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:contentDescription="@string/app_name"
-        android:paddingTop="8dp"
+        android:background="@drawable/bg_surface_card"
+        android:padding="10dp"
         app:srcCompat="@drawable/ic_launcher_foreground"
-        android:maxWidth="50px"
-        android:maxHeight="50px"
+        android:maxWidth="72dp"
+        android:maxHeight="72dp"
         />
 
     <TextView
         android:id="@+id/tv_header_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:text="Catálogo de Videojuegos"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:paddingTop="10dp"
+        android:text="@string/catalogo_videojuegos"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_header_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:alpha="0.9"
+        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
         android:text="" />
 
 </LinearLayout>

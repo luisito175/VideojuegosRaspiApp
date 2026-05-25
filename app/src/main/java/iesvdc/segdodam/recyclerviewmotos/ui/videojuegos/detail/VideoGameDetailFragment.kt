@@ -17,9 +17,8 @@ class VideoGameDetailFragment : Fragment() {
     private var _binding: FragmentVideoGameDetailBinding? = null
     private val binding get() = _binding!!
     private var currentPosition: Int = -1
-    private var visitasIncrementadas = false
+    private var visitsIncremented = false
 
-    // Obtiene la MISMA instancia del ViewModel que el fragmento de la lista
     private val viewModel: VideoGamesViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -34,25 +33,21 @@ class VideoGameDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Recoge el argumento (la posición del videojuego)
         currentPosition = arguments?.getInt("video_game_position", -1) ?: -1
 
         if (currentPosition != -1) {
-            // Pide el videojuego al ViewModel en lugar de tener su propia lista
-            val videoGame = viewModel.getVideoGameAt(currentPosition)
-            if (videoGame != null) {
-                val updated = if (!visitasIncrementadas) {
-                    visitasIncrementadas = true
-                    videoGame.copy(visitas = videoGame.visitas + 1)
-                } else {
-                    videoGame
+            // Observamos cambios en la lista para actualizar la UI en tiempo real
+            viewModel.videoGames.observe(viewLifecycleOwner) { games ->
+                games.getOrNull(currentPosition)?.let { game ->
+                    bind(game)
+                    
+                    // Solo incrementamos visitas la primera vez que entramos y tenemos el dato
+                    if (!visitsIncremented) {
+                        visitsIncremented = true
+                        val updated = game.copy(visitas = game.visitas + 1)
+                        viewModel.updateVideoGame(currentPosition, updated)
+                    }
                 }
-
-                if (updated.visitas != videoGame.visitas) {
-                    viewModel.updateVideoGame(currentPosition, updated)
-                }
-
-                bind(updated)
             }
         }
     }
@@ -62,12 +57,15 @@ class VideoGameDetailFragment : Fragment() {
         binding.tvDetailPlataforma.text = videoGame.plataforma
         binding.tvDetailPrecio.text = String.format("%.2f €", videoGame.precio)
         binding.tvDetailCaracteristicas.text = videoGame.caracteristicas
-        binding.ratingBar.rating = videoGame.puntuacion
         binding.tvDetailVisitas.text = "Visitas: ${videoGame.visitas}"
-
-        binding.ratingBar.setOnRatingBarChangeListener { _, rating, _ ->
-            val updated = videoGame.copy(puntuacion = rating)
-            if (currentPosition != -1) {
+        
+        // Evitamos bucles infinitos al setear el rating
+        binding.ratingBar.setOnRatingBarChangeListener(null)
+        binding.ratingBar.rating = videoGame.puntuacion
+        
+        binding.ratingBar.setOnRatingBarChangeListener { _, rating, fromUser ->
+            if (fromUser) {
+                val updated = videoGame.copy(puntuacion = rating)
                 viewModel.updateVideoGame(currentPosition, updated)
             }
         }

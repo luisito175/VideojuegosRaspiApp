@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
+    android:background="@drawable/bg_screen_gradient"
     tools:context=".ui.videojuegos.VideoGamesListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -13,7 +13,9 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:clipToPadding="false"
-        android:paddingTop="0dp"
+        android:paddingTop="8dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
         android:paddingBottom="@dimen/custom_bottom_nav_height" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -24,9 +26,11 @@
         android:layout_marginEnd="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="@dimen/fab_margin_bottom"
-        android:contentDescription="Añadir videojuego"
+        android:contentDescription="@string/anadir_videojuego"
         android:src="@android:drawable/ic_input_add"
         android:layout_gravity="bottom|end"
+        app:backgroundTint="?attr/colorPrimary"
+        app:tint="?attr/colorOnPrimary"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

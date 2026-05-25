@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground">
+    android:background="@drawable/bg_screen_gradient">
 
     <TextView
         android:id="@+id/tv_favorites_title"
@@ -13,7 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Mis Videojuegos Favoritos"
+        android:text="@string/mis_favoritos"
         android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
         android:textColor="?attr/colorOnBackground"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,8 +37,9 @@
         android:id="@+id/tv_empty_favorites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No tienes videojuegos favoritos aún."
+        android:text="@string/sin_favoritos"
         android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+        android:textColor="?attr/colorOnSurfaceVariant"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

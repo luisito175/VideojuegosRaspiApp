@@ -7,26 +7,17 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
-import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface VideoGameApiService {
-    // Primary endpoint (no trailing slash)
     @GET("/api/videogame")
     suspend fun getVideoGamesResponse(): Response<List<VideoGameEntity>>
 
-    // Fallback endpoint (some servers expect a trailing slash)
-    @GET("/api/videogame/")
-    suspend fun getVideoGamesResponseWithSlash(): Response<List<VideoGameEntity>>
+    @GET("/api/videogame/{id}")
+    suspend fun getVideoGameById(@Path("id") id: Int): Response<VideoGameEntity>
 
     @POST("/api/videogame")
     suspend fun addVideoGame(@Body request: VideoGameCreateRequest): Response<Unit>
-
-    @PUT("/api/videogame/{id}")
-    suspend fun updateVideoGame(
-        @Path("id") id: Int,
-        @Body request: VideoGameUpdateRequest
-    ): Response<VideoGameEntity>
 
     @PATCH("/api/videogame/{id}")
     suspend fun patchVideoGame(
@@ -49,6 +40,7 @@ data class VideoGameCreateRequest(
 )
 
 data class VideoGameUpdateRequest(
+    val id: Int,
     val nombre: String,
     val precio: Double,
     val plataforma: String,
