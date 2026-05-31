@@ -24,12 +24,22 @@
             android:name="video_game_position"
             app:argType="integer"
             android:defaultValue="-1" />
+        <argument
+            android:name="video_game_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 
     <fragment
         android:id="@+id/galleryFragment"
-        android:name="iesvdc.segdodam.recyclerviewmotos.ui.gallery.GalleryFragment"
+        android:name="iesvdc.segdodam.recyclerviewmotos.ui.ranking.RankingFragment"
         android:label="Ranking"
+        tools:layout="@layout/fragment_ranking" />
+
+    <fragment
+        android:id="@+id/recommenderFragment"
+        android:name="iesvdc.segdodam.recyclerviewmotos.ui.recommender.RecommenderFragment"
+        android:label="Recomendador"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
@@ -47,5 +57,30 @@
         android:name="iesvdc.segdodam.recyclerviewmotos.ui.settings.SettingsFragment"
         android:label="Ajustes"
         tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/friendsFragment"
+        android:name="iesvdc.segdodam.recyclerviewmotos.ui.social.FriendsFragment"
+        android:label="Amigos"
+        tools:layout="@layout/fragment_friends">
+        <action
+            android:id="@+id/action_friendsFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="iesvdc.segdodam.recyclerviewmotos.ui.social.ChatFragment"
+        android:label="Chat"
+        tools:layout="@layout/fragment_chat">
+        <argument
+            android:name="friend_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="friend_name"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
 
 </navigation>

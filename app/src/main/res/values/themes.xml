@@ -35,6 +35,11 @@
 
         <!-- Apply custom styles -->
         <item name="buttonStyle">@style/Widget.App.Button.Primary</item>
+        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigation</item>
+        <item name="materialCardViewStyle">@style/Widget.App.Card</item>
+        <item name="floatingActionButtonStyle">@style/Widget.App.Fab</item>
+        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
 
     </style>
 </resources>

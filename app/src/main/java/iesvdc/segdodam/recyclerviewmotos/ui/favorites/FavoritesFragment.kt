@@ -60,17 +60,12 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun navigateToDetail(pos: Int) {
-        // Here we might need to handle position differently if detail expects position in the FULL list
-        // However, looking at VideoGameDetailFragment, it seems to use position to get from VideoGamesViewModel
-        // If Favorites list is different, we might need to pass ID instead of position.
-        // For now, let's keep it consistent with the existing logic if possible.
-        // WARNING: Using position from a filtered list might break detail if it uses absolute position.
-        
-        // TODO: Update DetailFragment to accept ID instead of position for better reliability
+        val game = adapter.getItemAt(pos) ?: return
         val bundle = Bundle().apply {
-            putInt("video_game_position", pos) 
+            putInt("video_game_position", -1)
+            putInt("video_game_id", game.id)
         }
-        // findNavController().navigate(R.id.action_favoritesFragment_to_videoGameDetailFragment, bundle)
+        findNavController().navigate(R.id.action_favoritesFragment_to_videoGameDetailFragment, bundle)
     }
 
     override fun onDestroyView() {

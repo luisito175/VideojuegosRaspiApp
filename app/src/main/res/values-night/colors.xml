@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Paleta oscura con buen contraste -->
-    <color name="md_theme_primary">#90CAF9</color>
-    <color name="md_theme_onPrimary">#0D47A1</color>
-    <color name="md_theme_primaryContainer">#1E3A8A</color>
-    <color name="md_theme_onPrimaryContainer">#D6E4FF</color>
-    <color name="md_theme_secondary">#81C784</color>
-    <color name="md_theme_onSecondary">#1B5E20</color>
-    <color name="md_theme_secondaryContainer">#2E7D32</color>
-    <color name="md_theme_onSecondaryContainer">#DFF7E1</color>
-    <color name="md_theme_tertiary">#FFD54F</color>
-    <color name="md_theme_onTertiary">#4A3900</color>
-    <color name="md_theme_tertiaryContainer">#6B4F00</color>
-    <color name="md_theme_onTertiaryContainer">#FFE7B2</color>
-    <color name="md_theme_error">#EF9A9A</color>
-    <color name="md_theme_onError">#5F1111</color>
-    <color name="md_theme_background">#121212</color>
-    <color name="md_theme_onBackground">#E6E1E5</color>
-    <color name="md_theme_surface">#1E1E1E</color>
-    <color name="md_theme_onSurface">#E6E1E5</color>
-    <color name="md_theme_onSurfaceVariant">#CAC4D0</color>
-    <color name="surface_outline_soft">#2F3A48</color>
+    <!-- Paleta gaming neon en modo oscuro -->
+    <color name="md_theme_primary">#B9A8FF</color>
+    <color name="md_theme_onPrimary">#2A0A7D</color>
+    <color name="md_theme_primaryContainer">#3A1C93</color>
+    <color name="md_theme_onPrimaryContainer">#E8DEFF</color>
+    <color name="md_theme_secondary">#76E4FF</color>
+    <color name="md_theme_onSecondary">#003542</color>
+    <color name="md_theme_secondaryContainer">#004E60</color>
+    <color name="md_theme_onSecondaryContainer">#B9F4FF</color>
+    <color name="md_theme_tertiary">#FF8DDB</color>
+    <color name="md_theme_onTertiary">#5C0040</color>
+    <color name="md_theme_tertiaryContainer">#7B0058</color>
+    <color name="md_theme_onTertiaryContainer">#FFD8F2</color>
+    <color name="md_theme_error">#FFB4AB</color>
+    <color name="md_theme_onError">#690005</color>
+    <color name="md_theme_background">#0B0F1F</color>
+    <color name="md_theme_onBackground">#E4E8FF</color>
+    <color name="md_theme_surface">#131A2D</color>
+    <color name="md_theme_onSurface">#E4E8FF</color>
+    <color name="md_theme_onSurfaceVariant">#B7C0E0</color>
+    <color name="surface_outline_soft">#324064</color>
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>

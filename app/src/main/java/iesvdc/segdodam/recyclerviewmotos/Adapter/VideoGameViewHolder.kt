@@ -1,8 +1,11 @@
 package iesvdc.segdodam.recyclerviewmotos.Adapter
 
 import androidx.recyclerview.widget.RecyclerView
+import iesvdc.segdodam.recyclerviewmotos.R
 import iesvdc.segdodam.recyclerviewmotos.databinding.ItemVideoGameBinding
 import iesvdc.segdodam.recyclerviewmotos.models.VideoGame
+import java.text.NumberFormat
+import java.util.Locale
 
 class VideoGameViewHolder(
     private val binding: ItemVideoGameBinding,
@@ -11,17 +14,29 @@ class VideoGameViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun renderize(videoGame: VideoGame, position: Int) {
+        val numberFormat = NumberFormat.getNumberInstance(Locale.getDefault()).apply {
+            minimumFractionDigits = 2
+            maximumFractionDigits = 2
+        }
+
         binding.txtNombre.text = videoGame.nombre
         binding.txtPlataforma.text = videoGame.plataforma
-        binding.txtPrecio.text = String.format("%.2f €", videoGame.precio)
+        binding.txtPrecio.text = binding.root.context.getString(
+            R.string.price_value,
+            numberFormat.format(videoGame.precio)
+        )
         binding.txtCaracteristicas.text = videoGame.caracteristicas
-        binding.txtPuntuacion.text = "Puntuación: ${videoGame.puntuacion.toInt()}/5"
-        binding.txtVisitas.text = "Visitas: ${videoGame.visitas}"
+        binding.txtPuntuacion.text = binding.root.context.getString(
+            R.string.rating_with_votes,
+            videoGame.puntuacion,
+            videoGame.totalVotos
+        )
+        binding.txtVisitas.text = binding.root.context.getString(R.string.visits_value, videoGame.visitas)
 
         val icon = if (videoGame.isFavorite) {
-            android.R.drawable.btn_star_big_on
+            R.drawable.ic_favorite_filled
         } else {
-            android.R.drawable.btn_star_big_off
+            R.drawable.ic_favorite_outline
         }
         binding.btnFavorite.setImageResource(icon)
 

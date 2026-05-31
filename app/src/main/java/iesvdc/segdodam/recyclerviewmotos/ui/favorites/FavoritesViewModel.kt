@@ -31,6 +31,8 @@ class FavoritesViewModel @Inject constructor(
                     caracteristicas = entity.caracteristicas,
                     puntuacion = entity.puntuacion,
                     visitas = entity.visitas,
+                    genero = entity.genero,
+                    totalVotos = entity.totalVotos,
                     isFavorite = true
                 )
             }
@@ -45,7 +47,9 @@ class FavoritesViewModel @Inject constructor(
                 plataforma = videoGame.plataforma,
                 caracteristicas = videoGame.caracteristicas,
                 puntuacion = videoGame.puntuacion,
-                visitas = videoGame.visitas
+                visitas = videoGame.visitas,
+                genero = videoGame.genero,
+                totalVotos = videoGame.totalVotos
             )
             removeFavoriteUseCase(entity)
         }

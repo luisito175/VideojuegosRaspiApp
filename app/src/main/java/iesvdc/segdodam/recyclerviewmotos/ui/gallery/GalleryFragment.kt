@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import iesvdc.segdodam.recyclerviewmotos.R
 import iesvdc.segdodam.recyclerviewmotos.databinding.FragmentGalleryBinding
-import iesvdc.segdodam.recyclerviewmotos.models.VideoGame
 import iesvdc.segdodam.recyclerviewmotos.ui.videojuegos.VideoGamesViewModel
 import iesvdc.segdodam.recyclerviewmotos.ui.ranking.RankingAdapter
 
@@ -19,11 +20,6 @@ class GalleryFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: VideoGamesViewModel by activityViewModels()
     private lateinit var adapter: RankingAdapter
-
-    private val rankingOptions = listOf(
-        "Mejor valorado",
-        "Más popular"
-    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,49 +34,82 @@ class GalleryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
-        setupRankingSelector()
+        setupRecommenderForm()
         observeViewModel()
+        applyRecommendation()
     }
 
     private fun setupRecyclerView() {
-        adapter = RankingAdapter(emptyList(), "Puntuación")
+        adapter = RankingAdapter(emptyList(), getString(R.string.puntuacion))
         binding.rvRanking.layoutManager = LinearLayoutManager(requireContext())
         binding.rvRanking.adapter = adapter
     }
 
-    private fun setupRankingSelector() {
-        val rankingAdapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_list_item_1,
-            rankingOptions
+    private fun setupRecommenderForm() {
+        setupDropdown(
+            binding.actRecGenre,
+            listOf("RPG", "Accion", "Aventura", "Shooter", "Estrategia", "Deportes", "Indie")
         )
-        binding.actRanking.setAdapter(rankingAdapter)
-        binding.actRanking.setText(rankingOptions.first(), false)
-        binding.actRanking.setOnItemClickListener { _, _, position, _ ->
-            val selected = rankingOptions.getOrNull(position) ?: rankingOptions.first()
-            val current = viewModel.videoGames.value.orEmpty()
-            applyRanking(current, selected)
-        }
+        setupDropdown(binding.actRecPlatform, listOf("PC", "PS5", "Xbox", "Switch", "Steam Deck"))
+        setupDropdown(
+            binding.actRecMode,
+            listOf(
+                getString(R.string.rec_mode_solo),
+                getString(R.string.rec_mode_multiplayer),
+                getString(R.string.rec_mode_indifferent)
+            )
+        )
+        setupDropdown(
+            binding.actRecPriority,
+            listOf(
+                getString(R.string.rec_priority_story),
+                getString(R.string.rec_priority_challenge),
+                getString(R.string.rec_priority_relax),
+                getString(R.string.rec_priority_graphics)
+            )
+        )
+
+        binding.actRecGenre.setText("RPG", false)
+        binding.actRecPlatform.setText("PC", false)
+        binding.etRecBudget.setText("40")
+        binding.actRecMode.setText(getString(R.string.rec_mode_indifferent), false)
+        binding.actRecPriority.setText(getString(R.string.rec_priority_story), false)
+
+        binding.btnGenerateRecommendations.setOnClickListener { applyRecommendation() }
     }
 
     private fun observeViewModel() {
-        viewModel.videoGames.observe(viewLifecycleOwner) { list ->
-            val criterion = binding.actRanking.text?.toString() ?: rankingOptions.first()
-            applyRanking(list, criterion)
+        viewModel.recommendedVideoGames.observe(viewLifecycleOwner) { list ->
+            binding.tvRecommendationsEmpty.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+            adapter.updateData(list, getString(R.string.puntuacion))
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
+            if (!message.isNullOrBlank()) {
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-    private fun applyRanking(list: List<VideoGame>, criterion: String) {
-        val metricLabel = if (criterion == rankingOptions[0]) "Puntuación" else "Visitas"
-        adapter.updateData(sortByCriterion(list, criterion), metricLabel)
+    private fun setupDropdown(view: com.google.android.material.textfield.MaterialAutoCompleteTextView, options: List<String>) {
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, options)
+        view.setAdapter(adapter)
     }
 
-    private fun sortByCriterion(list: List<VideoGame>, criterion: String): List<VideoGame> {
-        return when (criterion) {
-            rankingOptions[0] -> list.sortedByDescending { it.puntuacion }
-            rankingOptions[1] -> list.sortedByDescending { it.visitas }
-            else -> list
+    private fun applyRecommendation() {
+        val budgetText = binding.etRecBudget.text?.toString()?.trim().orEmpty()
+        if (budgetText.isNotBlank() && budgetText.replace(",", ".").toDoubleOrNull() == null) {
+            Toast.makeText(requireContext(), getString(R.string.rec_budget_invalid), Toast.LENGTH_SHORT).show()
+            return
         }
+
+        viewModel.loadSmartRecommendations(
+            genre = binding.actRecGenre.text?.toString().orEmpty(),
+            platform = binding.actRecPlatform.text?.toString().orEmpty(),
+            budgetText = budgetText,
+            mode = binding.actRecMode.text?.toString().orEmpty(),
+            priority = binding.actRecPriority.text?.toString().orEmpty()
+        )
     }
 
     override fun onDestroyView() {

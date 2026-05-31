@@ -29,7 +29,7 @@ data class VideoGame(
 La app consume una API remota. La base actual es:
 
 ```
-https://untrigonometric-postmaximal-candice.ngrok-free.dev/
+https://jeannie-painted-hipolito.ngrok-free.dev/
 ```
 
 El recurso de la API es `videogame`, con los endpoints:

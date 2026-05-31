@@ -3,17 +3,27 @@
 
     <item
         android:id="@+id/videoGamesListFragment"
-        android:icon="@android:drawable/ic_menu_view"
-        android:title="Videojuegos" />
+        android:icon="@drawable/ic_nav_catalog"
+        android:title="@string/nav_videojuegos" />
 
     <item
         android:id="@+id/galleryFragment"
-        android:icon="@android:drawable/ic_menu_gallery"
-        android:title="Ranking" />
+        android:icon="@drawable/ic_nav_ranking"
+        android:title="@string/nav_ranking" />
+
+    <item
+        android:id="@+id/recommenderFragment"
+        android:icon="@drawable/ic_nav_recommender"
+        android:title="@string/nav_recomendador" />
 
     <item
         android:id="@+id/favoritesFragment"
-        android:icon="@android:drawable/btn_star_big_on"
-        android:title="Favoritos" />
+        android:icon="@drawable/ic_nav_favorites"
+        android:title="@string/nav_favoritos" />
+
+    <item
+        android:id="@+id/friendsFragment"
+        android:icon="@drawable/ic_nav_friends"
+        android:title="@string/nav_amigos" />
 
 </menu>

@@ -4,15 +4,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.core.view.doOnLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.core.view.updatePadding
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import android.net.Uri
@@ -51,7 +54,11 @@ class MainActivity : AppCompatActivity() {
         // el icono de menú (hamburguesa) en lugar de la flecha de "atrás".
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.videoGamesListFragment, R.id.galleryFragment, R.id.favoritesFragment
+                R.id.videoGamesListFragment,
+                R.id.galleryFragment,
+                R.id.recommenderFragment,
+                R.id.favoritesFragment,
+                R.id.friendsFragment
             ), drawerLayout
         )
 
@@ -59,6 +66,27 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         bottomNavView.setupWithNavController(navController)
+
+        val hideBottomBarOn = setOf(
+            R.id.videoGameDetailFragment,
+            R.id.chatFragment,
+            R.id.settingsFragment
+        )
+
+        fun applyBottomBarForDestination(destinationId: Int) {
+            val showBottomBar = destinationId !in hideBottomBarOn
+            bottomNavView.visibility = if (showBottomBar) View.VISIBLE else View.GONE
+            val bottomPadding = if (showBottomBar) bottomNavView.height else 0
+            binding.navHostFragment.updatePadding(bottom = bottomPadding)
+        }
+
+        bottomNavView.doOnLayout {
+            applyBottomBarForDestination(navController.currentDestination?.id ?: R.id.videoGamesListFragment)
+        }
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            applyBottomBarForDestination(destination.id)
+        }
 
         // 3. Lógica de la cabecera del Drawer
         setupNavHeader(navView)
@@ -78,11 +106,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // 4. Navegación normal en la barra inferior
-        bottomNavView.setOnItemSelectedListener { item ->
-            navController.navigate(item.itemId)
-            true
-        }
+        // 4. Navegación inferior: setupWithNavController ya gestiona selección y navegación.
 
         navView.setNavigationItemSelectedListener { item ->
             if (item.itemId == R.id.action_logout) {

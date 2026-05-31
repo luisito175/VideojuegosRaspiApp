@@ -1,5 +1,8 @@
 package iesvdc.segdodam.recyclerviewmotos.domain.usecases
 
+import iesvdc.segdodam.recyclerviewmotos.domain.models.RateResponseEntity
+import iesvdc.segdodam.recyclerviewmotos.domain.models.RecommendationCategory
+import iesvdc.segdodam.recyclerviewmotos.domain.models.ReviewEntity
 import iesvdc.segdodam.recyclerviewmotos.domain.models.VideoGameEntity
 import iesvdc.segdodam.recyclerviewmotos.domain.repositories.VideoGameRepository
 
@@ -8,6 +11,13 @@ import iesvdc.segdodam.recyclerviewmotos.domain.repositories.VideoGameRepository
  */
 class GetAllVideoGamesUseCase(private val repository: VideoGameRepository) {
     suspend operator fun invoke(): List<VideoGameEntity> = repository.getAllVideoGames()
+}
+
+class GetRecommendationsUseCase(private val repository: VideoGameRepository) {
+    suspend operator fun invoke(
+        category: RecommendationCategory,
+        value: String? = null
+    ): List<VideoGameEntity> = repository.getRecommendations(category, value)
 }
 
 /**
@@ -53,5 +63,18 @@ class SetInitialVideoGamesUseCase(private val repository: VideoGameRepository) {
  */
 class RegisterVisitUseCase(private val repository: VideoGameRepository) {
     suspend operator fun invoke(id: Int) = repository.registerVisit(id)
+}
+
+class RateVideoGameUseCase(private val repository: VideoGameRepository) {
+    suspend operator fun invoke(id: Int, rating: Int, comentario: String?): RateResponseEntity =
+        repository.rateVideoGame(id, rating, comentario)
+}
+
+class GetMyRatingUseCase(private val repository: VideoGameRepository) {
+    suspend operator fun invoke(id: Int): Int? = repository.getMyRating(id)
+}
+
+class GetReviewsUseCase(private val repository: VideoGameRepository) {
+    suspend operator fun invoke(id: Int): List<ReviewEntity> = repository.getReviews(id)
 }
 

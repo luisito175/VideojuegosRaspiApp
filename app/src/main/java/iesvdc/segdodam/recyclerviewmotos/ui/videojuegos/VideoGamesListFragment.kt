@@ -99,9 +99,11 @@ class VideoGamesListFragment : Fragment() {
     // Catalog mode: no add/edit/delete actions.
 
     private fun navigateToDetail(pos: Int) {
+        val game = adapter.getItemAt(pos) ?: return
         // Crea un Bundle para pasar la posición del videojuego
         val bundle = Bundle().apply {
             putInt("video_game_position", pos)
+            putInt("video_game_id", game.id)
         }
         // Navega al fragmento de detalles usando la acción definida en nav_graph.xml
         findNavController().navigate(R.id.action_videoGamesListFragment_to_videoGameDetailFragment, bundle)

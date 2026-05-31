@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_screen_gradient"
-    android:paddingTop="16dp">
+    android:paddingTop="16dp"
+    android:paddingBottom="@dimen/custom_bottom_nav_height">
 
     <TextView
         android:id="@+id/tvRankingTitle"
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/ranking_videojuegos"
+        android:text="@string/recommendations_title"
         android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
         android:textColor="?attr/colorOnBackground"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +27,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="4dp"
-        android:text="@string/ranking_subtitulo"
+        android:text="@string/recommendations_subtitle"
         android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
         android:textColor="?attr/colorOnSurfaceVariant"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,21 +50,97 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvRankingSubtitle">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilRanking"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/ranking"
-            android:padding="12dp"
-            app:endIconMode="dropdown_menu">
+            android:orientation="vertical"
+            android:padding="12dp">
 
-            <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/actRanking"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRecGenre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none" />
+                android:hint="@string/rec_hint_genre"
+                app:endIconMode="dropdown_menu">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/actRecGenre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRecPlatform"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="@string/rec_hint_platform"
+                app:endIconMode="dropdown_menu">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/actRecPlatform"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRecBudget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="@string/rec_hint_budget">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRecBudget"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRecMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="@string/rec_hint_mode"
+                app:endIconMode="dropdown_menu">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/actRecMode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRecPriority"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="@string/rec_hint_priority"
+                app:endIconMode="dropdown_menu">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/actRecPriority"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnGenerateRecommendations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/rec_apply" />
+        </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -75,10 +152,25 @@
         android:clipToPadding="false"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:paddingBottom="16dp"
+        android:paddingBottom="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardRanking"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/tvRecommendationsEmpty"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/rec_empty"
+        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardRanking" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

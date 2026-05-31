@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import iesvdc.segdodam.recyclerviewmotos.data.api.AuthApiService
+import iesvdc.segdodam.recyclerviewmotos.data.api.SocialApiService
 import iesvdc.segdodam.recyclerviewmotos.data.api.VideoGameApiService
 import iesvdc.segdodam.recyclerviewmotos.data.api.UserApiService
 import iesvdc.segdodam.recyclerviewmotos.data.auth.AuthAuthenticator
@@ -30,6 +31,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object HiltModule {
 
+    private const val BASE_URL = "https://jeannie-painted-hipolito.ngrok-free.dev/"
+
     @Singleton
     @Provides
     fun provideAuthApiService(): AuthApiService {
@@ -38,7 +41,7 @@ object HiltModule {
             .create()
         return Retrofit.Builder()
             // Base URL from ngrok tunnel.
-            .baseUrl("https://untrigonometric-postmaximal-candice.ngrok-free.dev/")
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(AuthApiService::class.java)
@@ -63,7 +66,7 @@ object HiltModule {
             .setStrictness(Strictness.LENIENT)
             .create()
         return Retrofit.Builder()
-            .baseUrl("https://untrigonometric-postmaximal-candice.ngrok-free.dev/")
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .build()
@@ -79,6 +82,12 @@ object HiltModule {
     @Provides
     fun provideUserApiService(retrofit: Retrofit): UserApiService {
         return retrofit.create(UserApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSocialApiService(retrofit: Retrofit): SocialApiService {
+        return retrofit.create(SocialApiService::class.java)
     }
 
     @Singleton
@@ -152,6 +161,38 @@ object HiltModule {
         repository: VideoGameRepository
     ): RegisterVisitUseCase {
         return RegisterVisitUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetRecommendationsUseCase(
+        repository: VideoGameRepository
+    ): GetRecommendationsUseCase {
+        return GetRecommendationsUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRateVideoGameUseCase(
+        repository: VideoGameRepository
+    ): RateVideoGameUseCase {
+        return RateVideoGameUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetMyRatingUseCase(
+        repository: VideoGameRepository
+    ): GetMyRatingUseCase {
+        return GetMyRatingUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetReviewsUseCase(
+        repository: VideoGameRepository
+    ): GetReviewsUseCase {
+        return GetReviewsUseCase(repository)
     }
 
     @Singleton

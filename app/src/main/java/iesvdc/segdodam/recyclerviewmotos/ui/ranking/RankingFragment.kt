@@ -21,7 +21,7 @@ class RankingFragment : Fragment() {
 
     private val rankingOptions = listOf(
         "Mejor valorado",
-        "Más popular"
+        "Mas popular"
     )
 
     override fun onCreateView(
@@ -42,7 +42,7 @@ class RankingFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = RankingAdapter(emptyList(), "Puntuación")
+        adapter = RankingAdapter(emptyList(), "Puntuacion")
         binding.rvRanking.layoutManager = LinearLayoutManager(requireContext())
         binding.rvRanking.adapter = adapter
     }
@@ -70,7 +70,7 @@ class RankingFragment : Fragment() {
     }
 
     private fun applyRanking(list: List<VideoGame>, criterion: String) {
-        val metricLabel = if (criterion == rankingOptions[0]) "Puntuación" else "Visitas"
+        val metricLabel = if (criterion == rankingOptions[0]) "Puntuacion" else "Visitas"
         adapter.updateData(sortByCriterion(list, criterion), metricLabel)
     }
 

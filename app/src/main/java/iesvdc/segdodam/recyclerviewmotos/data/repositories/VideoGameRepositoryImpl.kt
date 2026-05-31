@@ -1,6 +1,9 @@
 package iesvdc.segdodam.recyclerviewmotos.data.repositories
 
 import iesvdc.segdodam.recyclerviewmotos.data.datasources.VideoGameRemoteDataSource
+import iesvdc.segdodam.recyclerviewmotos.domain.models.RateResponseEntity
+import iesvdc.segdodam.recyclerviewmotos.domain.models.RecommendationCategory
+import iesvdc.segdodam.recyclerviewmotos.domain.models.ReviewEntity
 import iesvdc.segdodam.recyclerviewmotos.domain.models.VideoGameEntity
 import iesvdc.segdodam.recyclerviewmotos.domain.repositories.VideoGameRepository
 
@@ -20,6 +23,11 @@ class VideoGameRepositoryImpl(
 
     override suspend fun getAllVideoGames(): List<VideoGameEntity> =
         remoteDataSource.fetchVideoGames()
+
+    override suspend fun getRecommendations(
+        category: RecommendationCategory,
+        value: String?
+    ): List<VideoGameEntity> = remoteDataSource.fetchRecommendations(category, value)
 
     override suspend fun addVideoGame(videoGame: VideoGameEntity): List<VideoGameEntity> =
         remoteDataSource.addVideoGame(videoGame)
@@ -41,6 +49,13 @@ class VideoGameRepositoryImpl(
         remoteDataSource.registerVisit(id)
     }
 
+    override suspend fun rateVideoGame(id: Int, rating: Int, comentario: String?): RateResponseEntity =
+        remoteDataSource.rateVideoGame(id, rating, comentario)
+
+    override suspend fun getMyRating(id: Int): Int? = remoteDataSource.getMyRating(id)
+
+    override suspend fun getReviews(id: Int): List<ReviewEntity> = remoteDataSource.getReviews(id)
+
     override fun getFavoriteVideoGames(): Flow<List<VideoGameEntity>> {
         return favoriteDao.getAllFavorites().map { favorites ->
             favorites.map { fav ->
@@ -51,7 +66,9 @@ class VideoGameRepositoryImpl(
                     plataforma = fav.plataforma,
                     caracteristicas = fav.caracteristicas,
                     puntuacion = fav.puntuacion,
-                    visitas = fav.visitas
+                    visitas = fav.visitas,
+                    genero = null,
+                    totalVotos = 0
                 )
             }
         }

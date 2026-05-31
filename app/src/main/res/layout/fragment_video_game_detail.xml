@@ -7,6 +7,7 @@
     android:background="@drawable/bg_screen_gradient"
     android:fillViewport="true"
     android:padding="12dp"
+    android:paddingBottom="@dimen/custom_bottom_nav_height"
     tools:context=".ui.videojuegos.detail.VideoGameDetailFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -128,6 +129,64 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ratingBar"
             tools:text="Visitas: 0" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_review_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="@string/review_hint"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_visitas">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_review_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="2"
+                android:maxLines="4" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_send_review"
+            style="@style/Widget.App.Button.Primary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/enviar_valoracion"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_review_comment" />
+
+        <TextView
+            android:id="@+id/tv_reviews_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/resenas"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_send_review" />
+
+        <TextView
+            android:id="@+id/tv_reviews_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_chip"
+            android:padding="10dp"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_reviews_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="ana (5/5): Imprescindible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -19,14 +19,14 @@
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:id="@+id/appbar_layout"
-            android:background="?attr/colorSurface"
+            android:background="@drawable/bg_toolbar_gradient"
             android:elevation="6dp"
             app:layout_scrollFlags="scroll|enterAlways|snap">
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
+                android:background="@drawable/bg_toolbar_gradient"
                 app:titleTextColor="?attr/colorOnPrimary"
                 app:layout_scrollFlags="scroll|enterAlways|snap" />
         </com.google.android.material.appbar.AppBarLayout>
@@ -39,17 +39,20 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_marginBottom="48dp" />
+            android:layout_marginBottom="@dimen/custom_bottom_nav_height" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav_view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/custom_bottom_nav_height"
             android:layout_gravity="bottom"
-            android:background="?attr/colorSurface"
+            android:background="@drawable/bg_bottom_nav"
             app:elevation="12dp"
-            app:itemIconTint="?attr/colorPrimary"
-            app:itemTextColor="?attr/colorPrimary"
+            app:itemActiveIndicatorStyle="@style/Widget.App.BottomNavigation.ActiveIndicator"
+            app:itemIconTint="@color/nav_item_tint"
+            app:itemTextColor="@color/nav_item_tint"
+            app:itemHorizontalTranslationEnabled="false"
+            app:labelVisibilityMode="labeled"
             app:menu="@menu/main_menu" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
